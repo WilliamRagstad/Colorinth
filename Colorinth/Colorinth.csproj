@@ -27,12 +27,4 @@
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="C3.XNA.Primitives2D">
-      <HintPath>..\..\..\..\..\odrive\Google Drive\Programming Projects\- Frameworks\- DLL\C3.XNA.Primitives2D.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
 </Project>

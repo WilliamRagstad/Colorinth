@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Colorinth.Extensions;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,6 +10,23 @@ namespace Colorinth
     {
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        #region Properties
+
+        private Vector2 _center => new Vector2(_graphics.PreferredBackBufferWidth / 2f, _graphics.PreferredBackBufferHeight / 2f);
+
+
+        private int _gameAreaWidth = 100;
+        private Rectangle _gameArea => new Rectangle((int)_center.X - _gameAreaWidth, (int)_center.Y - _gameAreaWidth, _gameAreaWidth * 2, _gameAreaWidth * 2);
+
+        #endregion
+
+        #region Colors
+
+        private Color _backgroundColor = new Color(90, 90, 90);
+        private Color _gameBackgroundColor = new Color(50, 50, 50);
+
+        #endregion
 
         public Colorinth()
         {
@@ -30,8 +49,6 @@ namespace Colorinth
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
@@ -39,16 +56,18 @@ namespace Colorinth
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            _gameAreaWidth = (int)(Math.Sin(gameTime.TotalGameTime.TotalMilliseconds * 0.005) * 100 + 200);
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(_backgroundColor);
 
             _spriteBatch.Begin();
+
+            _spriteBatch.DrawRect(GraphicsDevice, _gameArea, _gameBackgroundColor);
 
             _spriteBatch.End();
 
