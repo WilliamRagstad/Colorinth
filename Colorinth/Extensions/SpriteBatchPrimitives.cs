@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using Colorinth.Factories;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,8 +10,13 @@ namespace Colorinth.Extensions
     {
         #region Helper Functions
 
-        private static double AngleBetween(Vector2 v1, Vector2 v2) =>
-            Math.Acos(Vector2.Dot(Vector2.Normalize(v1), Vector2.Normalize(v2)));
+        private static double AngleBetween(Vector2 v1, Vector2 v2)
+        {
+            Vector2 vn1 = Vector2.Normalize(v1);
+            Vector2 vn2 = Vector2.Normalize(v2);
+
+            return Math.Acos(Vector2.Dot(vn1, vn2));
+        }
 
         #endregion
 
@@ -51,10 +57,27 @@ namespace Colorinth.Extensions
         public static void DrawLine(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Vector2 start,
             int length, float angle, Color color, int thickness) =>
             DrawLine(spriteBatch, graphicsDevice, start, length, angle, color, thickness, 1f);
+        [Obsolete("This method is not accurate unless the window is of square size. Ie both sides of the window is equal")]
         public static void DrawLine(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Vector2 start, Vector2 end, Color color, int thickness, float layerDepth)
-            => DrawLine(spriteBatch, graphicsDevice, start, (int)Math.Abs((start - end).Length()), -(float)AngleBetween(end - start, Vector2.UnitX), color, thickness, layerDepth);
+            => DrawLine(spriteBatch, graphicsDevice, start, (int)Math.Abs((end - start).Length()), (float)AngleBetween(end - start, Vector2.UnitX), color, thickness, layerDepth);
+        [Obsolete("This method is not accurate unless the window is of square size. Ie both sides of the window is equal")]
         public static void DrawLine(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Vector2 start, Vector2 end, Color color, int thickness)
             => DrawLine(spriteBatch, graphicsDevice, start, end, color, thickness, 1f);
+
+        #endregion
+
+        #region Grid
+
+        public static void DrawGrid(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Vector2 position, int size, int width, int height, Color color)
+        {
+            for (int i = 0; i < size + 1; i++)
+            {
+                int j = i * width / size;
+                int k = i * height / size;
+                DrawLine(spriteBatch, graphicsDevice, position + new Vector2(j, 0), height, (float)(0 * Math.PI / 180), color, 5);
+                DrawLine(spriteBatch, graphicsDevice, position + new Vector2(0, k), width, (float)(-90 * Math.PI / 180), color, 5);
+            }
+        }
 
         #endregion
     }
