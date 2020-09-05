@@ -60,29 +60,39 @@ namespace Colorinth
             _spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
+        #region Game Logic
+
+        #region Window Handling
+
+        private void ToggleFullscreen()
+        {
+            if (isFullscreen)
+            {
+                _graphics.PreferredBackBufferWidth = _gameWindowedSize.Width;
+                _graphics.PreferredBackBufferHeight = _gameWindowedSize.Height;
+            }
+            else
+            {
+                _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            }
+                
+            isFullscreen = !isFullscreen;
+            _graphics.IsFullScreen = isFullscreen;
+            _graphics.ApplyChanges();
+        }
+
+        #endregion
+
+        #endregion
+
         protected override void Update(GameTime gameTime)
         {
             KeyboardState kb = Keyboard.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (kb.IsKeyDown(Keys.F11))
-            {
-                if (isFullscreen)
-                {
-                    _graphics.PreferredBackBufferWidth = _gameWindowedSize.Width;
-                    _graphics.PreferredBackBufferHeight = _gameWindowedSize.Height;
-                }
-                else
-                {
-                    _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-                    _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-                }
-                
-                isFullscreen = !isFullscreen;
-                _graphics.IsFullScreen = isFullscreen;
-                _graphics.ApplyChanges();
-            }
+            if (kb.IsKeyDown(Keys.F11)) ToggleFullscreen();
 
             _gameAreaWidth = (int)(Math.Sin(gameTime.TotalGameTime.TotalMilliseconds * 0.005) * 100 + 200);
 
