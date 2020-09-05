@@ -94,7 +94,8 @@ namespace Colorinth
 
             if (kb.IsKeyDown(Keys.F11)) ToggleFullscreen();
 
-            _gameAreaWidth = (int)(Math.Sin(gameTime.TotalGameTime.TotalMilliseconds * 0.005) * 100 + 200);
+            // _gameAreaWidth = (int)(Math.Sin(gameTime.TotalGameTime.TotalMilliseconds * 0.005) * 100 + 200); // Good for testing drawing functions
+
 
             base.Update(gameTime);
         }
@@ -106,6 +107,8 @@ namespace Colorinth
             _spriteBatch.Begin();
 
             _spriteBatch.DrawRect(GraphicsDevice, _gameArea, _gameBackgroundColor);
+            _spriteBatch.DrawLine(GraphicsDevice, new Vector2(_gameArea.Left, _gameArea.Top), new Vector2(_gameArea.Bottom, _gameArea.Left), Color.White, 5);
+            //_spriteBatch.DrawLine(GraphicsDevice, new Vector2(_gameArea.Left, _gameArea.Top), 400, (float)(0 * (Math.PI / 180)), Color.White, 5);
 
             _spriteBatch.End();
 
