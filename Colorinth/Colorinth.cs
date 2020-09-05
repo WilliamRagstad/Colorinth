@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Drawing;
 using Colorinth.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Color = Microsoft.Xna.Framework.Color;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace Colorinth
 {
@@ -11,12 +14,18 @@ namespace Colorinth
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        #region Globals
+
+        private bool isFullscreen = false;
+
+        #endregion
+
         #region Properties
 
         private Vector2 _center => new Vector2(_graphics.PreferredBackBufferWidth / 2f, _graphics.PreferredBackBufferHeight / 2f);
 
-
-        private int _gameAreaWidth = 100;
+        private Size _gameWindowedSize = new Size(800, 800);
+        private int _gameAreaWidth = 200;
         private Rectangle _gameArea => new Rectangle((int)_center.X - _gameAreaWidth, (int)_center.Y - _gameAreaWidth, _gameAreaWidth * 2, _gameAreaWidth * 2);
 
         #endregion
@@ -38,9 +47,9 @@ namespace Colorinth
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            _graphics.PreferredBackBufferWidth = 800;
-            _graphics.PreferredBackBufferHeight = 800;
-            // _graphics.IsFullScreen = true;
+            _graphics.PreferredBackBufferWidth = _gameWindowedSize.Width;
+            _graphics.PreferredBackBufferHeight = _gameWindowedSize.Height;
+            _graphics.IsFullScreen = isFullscreen;
             _graphics.ApplyChanges();
 
             base.Initialize();
@@ -51,10 +60,39 @@ namespace Colorinth
             _spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
+        #region Game Logic
+
+        #region Window Handling
+
+        private void ToggleFullscreen()
+        {
+            if (isFullscreen)
+            {
+                _graphics.PreferredBackBufferWidth = _gameWindowedSize.Width;
+                _graphics.PreferredBackBufferHeight = _gameWindowedSize.Height;
+            }
+            else
+            {
+                _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            }
+                
+            isFullscreen = !isFullscreen;
+            _graphics.IsFullScreen = isFullscreen;
+            _graphics.ApplyChanges();
+        }
+
+        #endregion
+
+        #endregion
+
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            KeyboardState kb = Keyboard.GetState();
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
                 Exit();
+
+            if (kb.IsKeyDown(Keys.F11)) ToggleFullscreen();
 
             _gameAreaWidth = (int)(Math.Sin(gameTime.TotalGameTime.TotalMilliseconds * 0.005) * 100 + 200);
 
