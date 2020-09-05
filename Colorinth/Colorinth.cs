@@ -23,8 +23,8 @@ namespace Colorinth
 
         #region Colors
 
-        private Color _backgroundColor = new Color(90, 90, 90);
-        private Color _gameBackgroundColor = new Color(50, 50, 50);
+        private readonly Color _backgroundColor = new Color(90, 90, 90);
+        private readonly Color _gameBackgroundColor = new Color(50, 50, 50);
 
         #endregion
 
