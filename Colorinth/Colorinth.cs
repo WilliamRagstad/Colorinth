@@ -131,7 +131,7 @@ namespace Colorinth
             _spriteBatch.DrawRect(GraphicsDevice, _gameArea, _gameBackgroundColor);
             _spriteBatch.DrawGrid(GraphicsDevice, _gameArea, _currentLevel.SizeX, _currentLevel.SizeY, _gridColor, 5);
             // Draw the level
-            _spriteBatch.DrawLevel(GraphicsDevice, _currentLevel, _gameArea);
+            _spriteBatch.DrawLevel(GraphicsDevice, _currentLevel, _gameArea, _gameAreaScale);
 
             _spriteBatch.End();
 
