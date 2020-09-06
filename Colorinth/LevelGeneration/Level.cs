@@ -18,18 +18,9 @@ namespace Colorinth.LevelGeneration
             horizontalEdgeList = new List<char>();
             verticalEdgeList = new List<char>();
 
-            for (int i = 0; i < sizeX*sizeY; i++)
-            {
-                tileList.Add('.');
-            }
-            for (int i = 0; i < sizeX*(sizeY-1); i++)
-            {
-                horizontalEdgeList.Add('.');
-            }
-            for (int i = 0; i < (sizeX-1)*sizeY; i++)
-            {
-                verticalEdgeList.Add('.');
-            }
+            for (int i = 0; i < sizeX*sizeY; i++) tileList.Add('.');
+            for (int i = 0; i < sizeX*(sizeY-1); i++) horizontalEdgeList.Add('.');
+            for (int i = 0; i < (sizeX-1)*sizeY; i++) verticalEdgeList.Add('.');
         }
         public void SetSizeX(byte size)
         {
