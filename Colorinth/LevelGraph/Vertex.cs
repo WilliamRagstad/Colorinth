@@ -5,7 +5,7 @@ namespace Colorinth.Graph
     public class Vertex
     {
         private List<char> color;
-        //private List<Edge> edges;
+        private List<Vertex> edges;
 
         public Vertex()
         {

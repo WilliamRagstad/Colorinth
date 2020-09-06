@@ -33,8 +33,14 @@ namespace Colorinth.LevelGeneration
 
             // Creates lists containing all colors that will be used, based on the argument numOfColors
             // Red, blue, yellow, green, purple, orange
-            List<char> colors = new List<char>{'R', 'B', 'Y', 'G', 'P', 'O'};
-            List<char> colorsOpen = new List<char>{'r', 'b', 'y', 'g', 'p', 'o'};
+            List<char> colors = new List<char>();
+            List<char> colorsOpen = new List<char>();
+            char[] allColors = new char[] {'R', 'B', 'Y', 'G', 'P', 'O'};
+            char[] allColorsOpen = new char[] {'r', 'b', 'y', 'g', 'p', 'o'};
+            for (int i = 0; i < numOfColors; i++) {
+                colors.Add(allColors[i]);
+                colorsOpen.Add(allColorsOpen[i]);
+            }
 
             // Calculate exact number of buttons of each color
             int numColorsLeft = numOfColors;
