@@ -34,6 +34,7 @@ namespace Colorinth
 
         private readonly Color _backgroundColor = new Color(90, 90, 90);
         private readonly Color _gameBackgroundColor = new Color(50, 50, 50);
+        private readonly Color _gridColor = new Color(70, 70, 70);
 
         #endregion
 
@@ -116,7 +117,7 @@ namespace Colorinth
 
             _spriteBatch.DrawRect(GraphicsDevice, _gameArea, _gameBackgroundColor);
 
-            _spriteBatch.DrawGrid(GraphicsDevice, new Vector2(_gameArea.X, _gameArea.Y), 6, _gameAreaWidth * 2, _gameAreaWidth * 2, Color.White);
+            _spriteBatch.DrawGrid(GraphicsDevice, new Vector2(_gameArea.X, _gameArea.Y), 6, _gameAreaWidth * 2, _gameAreaWidth * 2, _gridColor);
 
             _spriteBatch.End();
 
