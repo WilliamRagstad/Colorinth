@@ -18,9 +18,9 @@ namespace Colorinth.Model
                 for (byte j = 0; j < sizeX; j++)
                 {
                     Vertex v = new Vertex();
-                    v.coordinateX = i;
-                    v.coordinateY = j;
-                    v.index = j * sizeY + i;
+                    v.coordinateX = j;
+                    v.coordinateY = i;
+                    v.index = i*sizeX + j;
                     vertices.Add(v);
                 }
             }
