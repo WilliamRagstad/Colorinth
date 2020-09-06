@@ -46,14 +46,14 @@ namespace Colorinth.Generators
                     Vertex curr = vertices[currIndex];
                     if (j < sizeX-1)
                     {
-                        if (curr.edges.Contains(vertices[currIndex+1]))
+                        if (!curr.edges.Contains(vertices[currIndex+1]))
                         {
                             level.verticalEdgeList[currIndex-curr.coordinateY] = 'W';
                         }
                     }
                     if (i < sizeY-1)
                     {
-                        if (curr.edges.Contains(vertices[currIndex+sizeX]))
+                        if (!curr.edges.Contains(vertices[currIndex+sizeX]))
                         {
                             level.horizontalEdgeList[currIndex] = 'W';
                         }

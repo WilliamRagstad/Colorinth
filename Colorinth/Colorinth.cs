@@ -84,7 +84,7 @@ namespace Colorinth
             base.Initialize();
 
             // Generate Level
-            _currentLevel = LevelGenerator.GenerateLevel(6, 2, 2, 0.44, false);
+            _currentLevel = LevelGenerator.GenerateLevel(6, 7, 7, 0.44, false);
             _player = new Player(0, 0);
         }
 
