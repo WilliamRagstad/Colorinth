@@ -13,6 +13,7 @@ namespace Colorinth.Extensions
         #region Properties
 
         private static readonly int _spriteWidth = 195;
+        private static readonly float _spriteScale = 1 / 3f;
 
         #endregion
         #region Textures
@@ -32,7 +33,7 @@ namespace Colorinth.Extensions
             int tileOffsetY = area.Height / level.SizeY / 2; //  -  _spriteWidth / 2;
             
             Vector2 spriteOrigin = new Vector2(_spriteWidth / 2);
-            float spriteScale = 0.333f;
+            float spriteScale = areaScale / 50f * _spriteScale;
 
             for (int y = 0; y < level.SizeY; y++)
             {
