@@ -5,7 +5,7 @@ namespace Colorinth.LevelGeneration
     public class Level
     {
         public byte SizeX, SizeY;
-        public int Size;
+        public int TotalSize { get; }
         private readonly List<char> _tileList = new List<char>();
         private readonly List<char> _horizontalEdgeList = new List<char>();
         private readonly List<char> _verticalEdgeList = new List<char>();
@@ -14,9 +14,9 @@ namespace Colorinth.LevelGeneration
         {
             SizeX = sizeX;
             SizeY = sizeY;
-            Size = sizeX * sizeY;
+            TotalSize = sizeX * sizeY;
 
-            for (int i = 0; i < Size; i++) _tileList.Add('.');
+            for (int i = 0; i < TotalSize; i++) _tileList.Add('.');
             for (int i = 0; i < sizeX*(sizeY-1); i++) _horizontalEdgeList.Add('.');
             for (int i = 0; i < (sizeX-1)*sizeY; i++) _verticalEdgeList.Add('.');
         }
