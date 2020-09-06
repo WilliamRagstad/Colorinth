@@ -13,14 +13,15 @@ namespace Colorinth.Model
             this.sizeX = sizeX;
             this.sizeY = sizeY;
             vertices = new List<Vertex>();
-            for (byte i = 0; i < sizeX; i++)
+            for (byte i = 0; i < sizeY; i++)
             {
-                for (byte j = 0; j < sizeY; j++)
+                for (byte j = 0; j < sizeX; j++)
                 {
-                    vertices.Add(new Vertex());
-                    vertices[i*j].coordinateX = i;
-                    vertices[i*j].coordinateY = j;
-                    vertices[i*j].index = i*j;
+                    Vertex v = new Vertex();
+                    v.coordinateX = i;
+                    v.coordinateY = j;
+                    v.index = i*j;
+                    vertices.Add(v);
                 }
             }
         }

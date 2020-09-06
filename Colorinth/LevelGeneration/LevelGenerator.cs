@@ -32,6 +32,14 @@ namespace Colorinth.LevelGeneration
                 level.SetTileAt(sizeX*(sizeY/2+1)-1, 'F');
             }
 
+            for (int i = 0; i < sizeY; i++)
+            {
+                for (int j = 0; j < sizeX; j++)
+                {
+                    
+                }
+            }
+
             // Creates lists containing all colors that will be used, based on the argument numOfColors
             // Red, blue, yellow, green, purple, orange
             List<char> colors = new List<char>();
