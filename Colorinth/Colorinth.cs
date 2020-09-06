@@ -66,8 +66,6 @@ namespace Colorinth
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            _currentLevel = LevelGenerator.GenerateLevel(6, 3, 2, 0.44, false);
-
             _graphics.PreferredBackBufferWidth = _gameWindowedSize.Width;
             _graphics.PreferredBackBufferHeight = _gameWindowedSize.Height;
             _graphics.IsFullScreen = _isFullscreen;

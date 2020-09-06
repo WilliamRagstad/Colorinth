@@ -28,7 +28,7 @@ namespace Colorinth.LevelGeneration
             else
             {
                 level.SetTileAt(sizeX*(sizeY/2), 'S');
-                level.SetTileAt(sizeX*(sizeY/2+1), 'F');
+                level.SetTileAt(sizeX*(sizeY/2+1)-1, 'F');
             }
 
             // Creates lists containing all colors that will be used, based on the argument numOfColors
