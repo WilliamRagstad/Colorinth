@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using Colorinth.Extensions;
+using Colorinth.LevelGeneration;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -47,6 +48,8 @@ namespace Colorinth
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            LevelGenerator.GenerateLevel(6, 5, 5, 0.44, false);
+
             _graphics.PreferredBackBufferWidth = _gameWindowedSize.Width;
             _graphics.PreferredBackBufferHeight = _gameWindowedSize.Height;
             _graphics.IsFullScreen = isFullscreen;

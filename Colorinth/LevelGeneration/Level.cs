@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Colorinth.Generators
+namespace Colorinth.LevelGeneration
 {
     public class Level
     {
@@ -9,61 +9,65 @@ namespace Colorinth.Generators
         private List<char> horizontalEdgeList;
         private List<char> verticalEdgeList;
 
-        public void initialize(byte sizeX, byte sizeY)
+        public void Initialize(byte sizeX, byte sizeY)
         {
             this.sizeX = sizeX;
             this.sizeY = sizeY;
 
+            tileList = new List<char>();
+            horizontalEdgeList = new List<char>();
+            verticalEdgeList = new List<char>();
+
             for (int i = 0; i < sizeX*sizeY; i++)
             {
-                tileList.Add(' ');
+                tileList.Add('.');
             }
             for (int i = 0; i < sizeX*(sizeY-1); i++)
             {
-                horizontalEdgeList.Add(' ');
+                horizontalEdgeList.Add('.');
             }
             for (int i = 0; i < (sizeX-1)*sizeY; i++)
             {
-                verticalEdgeList.Add(' ');
+                verticalEdgeList.Add('.');
             }
         }
-        public void setSizeX(byte size)
+        public void SetSizeX(byte size)
         {
             sizeX = size;
         }
-        public byte getSizeX()
+        public byte GetSizeX()
         {
             return sizeX;
         }
-        public void setSizeY(byte size)
+        public void SetSizeY(byte size)
         {
             sizeY = size;
         }
-        public byte getSizeY()
+        public byte GetSizeY()
         {
             return sizeY;
         }
-        public void setTileAt(int index, char tile)
+        public void SetTileAt(int index, char tile)
         {
             tileList[index] = tile;
         }
-        public char getTileAt(int index)
+        public char GetTileAt(int index)
         {
             return tileList[index];
         }
-        public void setHorizontalEdgeAt(int index, char edge)
+        public void SetHorizontalEdgeAt(int index, char edge)
         {
             horizontalEdgeList[index] = edge;
         }
-        public char getHorizontalEdgeAt(int index)
+        public char GetHorizontalEdgeAt(int index)
         {
             return horizontalEdgeList[index];
         }
-        public void setVerticalEdgeAt(int index, char edge)
+        public void SetVerticalEdgeAt(int index, char edge)
         {
             verticalEdgeList[index] = edge;
         }
-        public char getVerticalEdgeAt(int index)
+        public char GetVerticalEdgeAt(int index)
         {
             return verticalEdgeList[index];
         }
