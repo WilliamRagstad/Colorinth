@@ -79,9 +79,9 @@ namespace Colorinth.Extensions
             Vector2 o = squareCorners ? new Vector2(c / 2f) : new Vector2(thickness / 2f, 0);
 
             for (int y = 0; y < sizeY + 1; y++)
-                DrawLine(spriteBatch, graphicsDevice, position + new Vector2(0, y * width / sizeX), width + c, (float)(-90 * Math.PI / 180), color, thickness, 1, o);
+                DrawLine(spriteBatch, graphicsDevice, position + new Vector2(0, (float)y * width / sizeX), width + c, (float)(-90 * Math.PI / 180), color, thickness, 1, o);
             for (int x = 0; x < sizeX + 1; x++)
-                DrawLine(spriteBatch, graphicsDevice, position + new Vector2(x * height / sizeY, 0), height + c, (float)(0 * Math.PI / 180), color, thickness, 1, o);
+                DrawLine(spriteBatch, graphicsDevice, position + new Vector2((float)x * height / sizeY, 0), height + c, (float)(0 * Math.PI / 180), color, thickness, 1, o);
         }
         public static void DrawGrid(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Rectangle rectangle, int sizeX, int sizeY, Color color, int thickness, bool squareCorners)
             => DrawGrid(spriteBatch, graphicsDevice, new Vector2(rectangle.X, rectangle.Y), rectangle.Width, rectangle.Height, sizeX, sizeY, color, thickness, squareCorners);
