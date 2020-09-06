@@ -48,7 +48,7 @@ namespace Colorinth.Generators
                     {
                         if (curr.edges.Contains(vertices[currIndex+1]))
                         {
-                            level.verticalEdgeList[currIndex-(curr.coordinateY+1)] = 'W';
+                            level.verticalEdgeList[currIndex-curr.coordinateY] = 'W';
                         }
                     }
                     if (i < sizeY-1)
