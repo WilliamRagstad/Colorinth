@@ -129,6 +129,8 @@ namespace Colorinth
         {
             AudioManager.PlayLoop(_themeSong);
         }
+
+        private TimeSpan previousMove;
         protected override void Update(GameTime gameTime)
         {
             KeyboardState kb = Keyboard.GetState();
@@ -137,27 +139,35 @@ namespace Colorinth
 
             if (kb.IsKeyDown(Keys.F11)) ToggleFullscreen();
 
-            if (kb.IsKeyDown(Keys.Left) && _player.X > 0)
+            if ((previousMove == null || gameTime.TotalGameTime.Subtract(previousMove).TotalMilliseconds > 200) &&
+                (kb.IsKeyDown(Keys.Left) || kb.IsKeyDown(Keys.Right) || kb.IsKeyDown(Keys.Up) || kb.IsKeyDown(Keys.Down))
+                )
             {
-                _player.X--;
-                SoundEffectManager.Play(_walkSoundEffect);
-            }
-            else if (kb.IsKeyDown(Keys.Right) && _player.X < _currentLevel.SizeX - 1)
-            {
-                _player.X++;
-                SoundEffectManager.Play(_walkSoundEffect);
+                if (kb.IsKeyDown(Keys.Left) && _player.X > 0)
+                {
+                    _player.X--;
+                    SoundEffectManager.Play(_walkSoundEffect);
+                }
+                else if (kb.IsKeyDown(Keys.Right) && _player.X < _currentLevel.SizeX - 1)
+                {
+                    _player.X++;
+                    SoundEffectManager.Play(_walkSoundEffect);
+                }
+
+                if (kb.IsKeyDown(Keys.Up) && _player.Y > 0)
+                {
+                    _player.Y--;
+                    SoundEffectManager.Play(_walkSoundEffect);
+                }
+                else if (kb.IsKeyDown(Keys.Down) && _player.Y < _currentLevel.SizeY - 1)
+                {
+                    _player.Y++;
+                    SoundEffectManager.Play(_walkSoundEffect);
+                }
+
+                previousMove = gameTime.TotalGameTime;
             }
 
-            if (kb.IsKeyDown(Keys.Up) && _player.Y > 0)
-            {
-                _player.Y--;
-                SoundEffectManager.Play(_walkSoundEffect);
-            }
-            else if (kb.IsKeyDown(Keys.Down) && _player.Y < _currentLevel.SizeY - 1)
-            {
-                _player.Y++;
-                SoundEffectManager.Play(_walkSoundEffect);
-            }
 
             base.Update(gameTime);
         }
