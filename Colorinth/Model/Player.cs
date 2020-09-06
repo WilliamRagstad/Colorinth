@@ -55,20 +55,20 @@ namespace Colorinth.Model
 
         private bool WallRight(Level level)
         {
-            return false;
-            if (Y == 0 && X == 0) return level.verticalEdgeList[0].Equals('W');
-            else return level.verticalEdgeList[Y * level.SizeX + X].Equals('W');
+            int i = Y * level.SizeX + X;
+            return !level.G.vertices[i].edges.Contains(level.G.vertices[i + 1]);
         }
 
         private bool WallLeft(Level level)
         {
-            return false;
-            level.verticalEdgeList[Y * level.SizeX + X - 1].Equals('W');
+            int i = Y * level.SizeX + X;
+            return !level.G.vertices[i].edges.Contains(level.G.vertices[i - 1]);
         }
 
         private bool WallAbove(Level level)
         {
-            return false;
+            int i = Y * level.SizeX + X;
+            return !level.G.vertices[i].edges.Contains(level.G.vertices[i - level.SizeX]);
         }
         private bool WallUnder(Level level)
         {
