@@ -49,3 +49,9 @@
 /processorParam:TextureFormat=Color
 /build:start.png
 
+#begin walk.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:walk.wav
+
