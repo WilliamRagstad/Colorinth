@@ -121,8 +121,13 @@ namespace Colorinth
                 Exit();
 
             if (kb.IsKeyDown(Keys.F11)) ToggleFullscreen();
+            
+            if (kb.IsKeyDown(Keys.Left) && _player.X > 0) _player.X--;
+            if (kb.IsKeyDown(Keys.Right) && _player.X < _currentLevel.SizeX - 1) _player.X++;
+            if (kb.IsKeyDown(Keys.Up) && _player.Y > 0) _player.Y--;
+            if (kb.IsKeyDown(Keys.Down) && _player.Y < _currentLevel.SizeY - 1) _player.Y++;
 
-            base.Update(gameTime);
+                base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
