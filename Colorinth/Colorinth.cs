@@ -2,6 +2,7 @@
 using System.Drawing;
 using Colorinth.Extensions;
 using Colorinth.Generators;
+using Colorinth.Managers;
 using Colorinth.Model;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -73,6 +74,7 @@ namespace Colorinth
             _graphics.IsFullScreen = _isFullscreen;
             _graphics.ApplyChanges();
             
+            SoundEffectManager.Initialize(Content);
             LevelDrawer.Initialize(Content);
             PlayerDrawer.Initialize(Content);
             base.Initialize();
@@ -121,13 +123,30 @@ namespace Colorinth
                 Exit();
 
             if (kb.IsKeyDown(Keys.F11)) ToggleFullscreen();
-            
-            if (kb.IsKeyDown(Keys.Left) && _player.X > 0) _player.X--;
-            if (kb.IsKeyDown(Keys.Right) && _player.X < _currentLevel.SizeX - 1) _player.X++;
-            if (kb.IsKeyDown(Keys.Up) && _player.Y > 0) _player.Y--;
-            if (kb.IsKeyDown(Keys.Down) && _player.Y < _currentLevel.SizeY - 1) _player.Y++;
 
-                base.Update(gameTime);
+            if (kb.IsKeyDown(Keys.Left) && _player.X > 0)
+            {
+                _player.X--;
+                SoundEffectManager.Walk();
+            }
+            else if (kb.IsKeyDown(Keys.Right) && _player.X < _currentLevel.SizeX - 1)
+            {
+                _player.X++;
+                SoundEffectManager.Walk();
+            }
+
+            if (kb.IsKeyDown(Keys.Up) && _player.Y > 0)
+            {
+                _player.Y--;
+                SoundEffectManager.Walk();
+            }
+            else if (kb.IsKeyDown(Keys.Down) && _player.Y < _currentLevel.SizeY - 1)
+            {
+                _player.Y++;
+                SoundEffectManager.Walk();
+            }
+
+            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)

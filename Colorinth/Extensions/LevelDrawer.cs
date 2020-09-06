@@ -51,7 +51,7 @@ namespace Colorinth.Extensions
             {
                 for (int x = 0; x < level.SizeX; x++)
                 {
-                    char tile = level.tileList[y * level.SizeY + x];
+                    char tile = level.tileList[y * level.SizeX + x];
 
                     int cx = area.X + tileOffsetX + x * areaScale * 2;
                     int cy = area.Y + tileOffsetY + y * areaScale * 2;
