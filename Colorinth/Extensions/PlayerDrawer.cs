@@ -23,7 +23,7 @@ namespace Colorinth.Extensions
         #endregion
         public static void Initialize(ContentManager content)
         {
-            _playerTexture = content.Load<Texture2D>("player");
+            _playerTexture = content.Load<Texture2D>("player_sprite");
         }
         public static void DrawPlayer(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Level level, Player player, Rectangle area, int areaScale)
         {

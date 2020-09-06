@@ -24,8 +24,8 @@ namespace Colorinth.Extensions
         #endregion
         public static void Initialize(ContentManager content)
         {
-            _startTexture = content.Load<Texture2D>("start");
-            _finishTexture = content.Load<Texture2D>("finish");
+            _startTexture = content.Load<Texture2D>("start_sprite");
+            _finishTexture = content.Load<Texture2D>("finish_sprite");
         }
 
         public static void DrawLevel(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Level level, Rectangle area, int areaScale)

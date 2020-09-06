@@ -8,21 +8,9 @@ namespace Colorinth.Managers
 {
     public static class SoundEffectManager
     {
-        #region Sounds
-
-        private static SoundEffect _walkSoundEffect;
-
-        #endregion
-        public static void Initialize(ContentManager content)
-        {
-            _walkSoundEffect = content.Load<SoundEffect>("walk");
-        }
-
         public static void Play(SoundEffect sound)
         {
             sound.Play(1, 0, 0);
         }
-
-        public static void Walk() => Play(_walkSoundEffect);
     }
 }
