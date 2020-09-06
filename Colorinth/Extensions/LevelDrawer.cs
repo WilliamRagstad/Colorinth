@@ -28,7 +28,7 @@ namespace Colorinth.Extensions
             _finishTexture = content.Load<Texture2D>("finish_sprite");
         }
 
-        public static void DrawLevel(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Level level, Rectangle area, int areaScale)
+        public static void DrawLevel(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Level level, Rectangle area, int areaScale, int wallThickness)
         {
             #region Local Vars
             
@@ -70,28 +70,40 @@ namespace Colorinth.Extensions
 
             #endregion
 
+            #region Walls locals
+            
+            int wallHorizontalLength = area.Width / level.SizeX;
+            int wallVerticalLength = area.Height / level.SizeY;
+
+            #endregion
+
             #region Horizontal Walls
 
             for (int i = 0; i < level.horizontalEdgeList.Count; i++)
             {
                 if (level.horizontalEdgeList[i] == 'W')
                 {
+                    int x = area.X + (i % level.SizeX) * areaScale * 2;
+                    int y = area.Y + i / level.SizeY * areaScale * 2 + wallHorizontalLength;
 
+                    spriteBatch.DrawLine(graphicsDevice, new Vector2(x, y), wallHorizontalLength, (float)(-90 * Math.PI / 180f), Color.AliceBlue, wallThickness);
                 }
             }
 
             #endregion
 
             #region Vertical Walls
-            
+
             for (int i = 0; i < level.verticalEdgeList.Count; i++)
             {
                 if (level.verticalEdgeList[i] == 'W')
                 {
+                    int x = area.X + (i % (level.SizeX - 1)) * areaScale * 2 + wallHorizontalLength;
+                    int y = area.Y + (i / (level.SizeY - 1)) * areaScale * 2;
 
+                    spriteBatch.DrawLine(graphicsDevice, new Vector2(x, y), wallHorizontalLength, (float)(0 * Math.PI / 180f), Color.AliceBlue, wallThickness);
                 }
             }
-
             #endregion
         }
     }
