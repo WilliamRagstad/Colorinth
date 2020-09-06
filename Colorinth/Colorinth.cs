@@ -130,7 +130,7 @@ namespace Colorinth
             AudioManager.PlayLoop(_themeSong);
         }
 
-        private TimeSpan previousMove;
+        private TimeSpan _previousMove;
         protected override void Update(GameTime gameTime)
         {
             KeyboardState kb = Keyboard.GetState();
@@ -139,7 +139,7 @@ namespace Colorinth
 
             if (kb.IsKeyDown(Keys.F11)) ToggleFullscreen();
 
-            if ((previousMove == null || gameTime.TotalGameTime.Subtract(previousMove).TotalMilliseconds > 200) &&
+            if ((gameTime.TotalGameTime.Subtract(_previousMove).TotalMilliseconds > 200) &&
                 (kb.IsKeyDown(Keys.Left) || kb.IsKeyDown(Keys.Right) || kb.IsKeyDown(Keys.Up) || kb.IsKeyDown(Keys.Down))
                 )
             {
@@ -165,7 +165,7 @@ namespace Colorinth
                     SoundEffectManager.Play(_walkSoundEffect);
                 }
 
-                previousMove = gameTime.TotalGameTime;
+                _previousMove = gameTime.TotalGameTime;
             }
 
 
