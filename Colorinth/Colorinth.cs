@@ -29,6 +29,8 @@ namespace Colorinth
         private int _gameAreaWidth = 200;
         private Rectangle _gameArea => new Rectangle((int)_center.X - _gameAreaWidth, (int)_center.Y - _gameAreaWidth, _gameAreaWidth * 2, _gameAreaWidth * 2);
 
+        private Level _currentLevel;
+
         #endregion
 
         #region Colors
@@ -58,7 +60,7 @@ namespace Colorinth
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            LevelGenerator.GenerateLevel(6, 5, 5, 0.44, false);
+            _currentLevel = LevelGenerator.GenerateLevel(6, 5, 5, 0.44, false);
 
             _graphics.PreferredBackBufferWidth = _gameWindowedSize.Width;
             _graphics.PreferredBackBufferHeight = _gameWindowedSize.Height;
@@ -118,9 +120,11 @@ namespace Colorinth
 
             _spriteBatch.Begin();
 
+            // Draw the background game area
             _spriteBatch.DrawRect(GraphicsDevice, _gameArea, _gameBackgroundColor);
+            _spriteBatch.DrawGrid(GraphicsDevice, new Vector2(_gameArea.X, _gameArea.Y), 6, _gameAreaWidth * 2, _gameAreaWidth * 2, _gridColor, 5);
 
-            _spriteBatch.DrawGrid(GraphicsDevice, new Vector2(_gameArea.X, _gameArea.Y), 6, _gameAreaWidth * 2, _gameAreaWidth * 2, _gridColor);
+            _spriteBatch.DrawLevel(GraphicsDevice, _currentLevel, _gameArea);
 
             _spriteBatch.End();
 

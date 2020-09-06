@@ -50,10 +50,15 @@ namespace Colorinth.Extensions
         #region Line
 
         public static void DrawLine(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Vector2 start,
-            int length, float angle, Color color, int thickness, float layerDepth)
+            int length, float angle, Color color, int thickness, float layerDepth, Vector2 origin)
             => DrawRect(spriteBatch, start, thickness, length,
-                Texture2DFactory.CreateSolid(graphicsDevice, thickness, length, color), Color.White, angle, new Vector2(thickness / 2f, 0), 
+                Texture2DFactory.CreateSolid(graphicsDevice, thickness, length, color), Color.White, angle, origin, 
                 Vector2.One, SpriteEffects.None, layerDepth);
+
+        public static void DrawLine(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Vector2 start,
+            int length, float angle, Color color, int thickness, float layerDepth)
+            => DrawLine(spriteBatch, graphicsDevice, start, length, angle, color, thickness, layerDepth,
+                new Vector2(thickness / 2f, 0));
         public static void DrawLine(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Vector2 start,
             int length, float angle, Color color, int thickness) =>
             DrawLine(spriteBatch, graphicsDevice, start, length, angle, color, thickness, 1f);
@@ -68,16 +73,22 @@ namespace Colorinth.Extensions
 
         #region Grid
 
-        public static void DrawGrid(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Vector2 position, int size, int width, int height, Color color)
+        public static void DrawGrid(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Vector2 position, int size, int width, int height, Color color, int thickness, bool squareCorners)
         {
+            int c = squareCorners ? thickness : 0;
+            Vector2 o = squareCorners ? new Vector2(c / 2f) : new Vector2(thickness / 2f, 0);
             for (int i = 0; i < size + 1; i++)
             {
                 int j = i * width / size;
                 int k = i * height / size;
-                DrawLine(spriteBatch, graphicsDevice, position + new Vector2(j, 0), height, (float)(0 * Math.PI / 180), color, 5);
-                DrawLine(spriteBatch, graphicsDevice, position + new Vector2(0, k), width, (float)(-90 * Math.PI / 180), color, 5);
+                DrawLine(spriteBatch, graphicsDevice, position + new Vector2(j, 0), height + c, (float)(0 * Math.PI / 180), color, thickness, 1, o);
+                DrawLine(spriteBatch, graphicsDevice, position + new Vector2(0, k), width + c, (float)(-90 * Math.PI / 180), color, thickness, 1, o);
             }
         }
+
+        public static void DrawGrid(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Vector2 position,
+            int size, int width, int height, Color color, int thickness)
+            => DrawGrid(spriteBatch, graphicsDevice, position, size, width, height, color, thickness, true);
 
         #endregion
     }
