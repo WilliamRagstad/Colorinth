@@ -73,22 +73,22 @@ namespace Colorinth.Extensions
 
         #region Grid
 
-        public static void DrawGrid(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Vector2 position, int size, int width, int height, Color color, int thickness, bool squareCorners)
+        public static void DrawGrid(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Vector2 position, int width, int height, int sizeX, int sizeY, Color color, int thickness, bool squareCorners)
         {
             int c = squareCorners ? thickness : 0;
             Vector2 o = squareCorners ? new Vector2(c / 2f) : new Vector2(thickness / 2f, 0);
-            for (int i = 0; i < size + 1; i++)
-            {
-                int j = i * width / size;
-                int k = i * height / size;
-                DrawLine(spriteBatch, graphicsDevice, position + new Vector2(j, 0), height + c, (float)(0 * Math.PI / 180), color, thickness, 1, o);
-                DrawLine(spriteBatch, graphicsDevice, position + new Vector2(0, k), width + c, (float)(-90 * Math.PI / 180), color, thickness, 1, o);
-            }
-        }
 
-        public static void DrawGrid(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Vector2 position,
-            int size, int width, int height, Color color, int thickness)
-            => DrawGrid(spriteBatch, graphicsDevice, position, size, width, height, color, thickness, true);
+            for (int y = 0; y < sizeY + 1; y++)
+                DrawLine(spriteBatch, graphicsDevice, position + new Vector2(0, y * width / sizeX), width + c, (float)(-90 * Math.PI / 180), color, thickness, 1, o);
+            for (int x = 0; x < sizeX + 1; x++)
+                DrawLine(spriteBatch, graphicsDevice, position + new Vector2(x * height / sizeY, 0), height + c, (float)(0 * Math.PI / 180), color, thickness, 1, o);
+        }
+        public static void DrawGrid(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Rectangle rectangle, int sizeX, int sizeY, Color color, int thickness, bool squareCorners)
+            => DrawGrid(spriteBatch, graphicsDevice, new Vector2(rectangle.X, rectangle.Y), rectangle.Width, rectangle.Height, sizeX, sizeY, color, thickness, squareCorners);
+        public static void DrawGrid(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Vector2 position, int width, int height, int sizeX, int sizeY, Color color, int thickness)
+            => DrawGrid(spriteBatch, graphicsDevice, position, width, height, sizeX, sizeY, color, thickness, true);
+        public static void DrawGrid(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Rectangle rectangle, int sizeX, int sizeY, Color color, int thickness)
+            => DrawGrid(spriteBatch, graphicsDevice, new Vector2(rectangle.X, rectangle.Y), rectangle.Width, rectangle.Height, sizeX, sizeY, color, thickness, true);
 
         #endregion
     }
