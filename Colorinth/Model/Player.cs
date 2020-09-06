@@ -41,7 +41,7 @@ namespace Colorinth.Model
                 SoundEffectManager.Play(_walkSoundEffect);
             }
 
-            if (kb.IsKeyDown(Keys.Up) && Y > 0 && !WallAbove(level))
+            else if (kb.IsKeyDown(Keys.Up) && Y > 0 && !WallAbove(level))
             {
                 Y--;
                 SoundEffectManager.Play(_walkSoundEffect);
