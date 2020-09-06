@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Colorinth.Model;
+using Colorinth.MazeGraph;
 
 namespace Colorinth.LevelGeneration
 {
@@ -13,30 +14,50 @@ namespace Colorinth.LevelGeneration
             Random rand = new Random();
             int totalSize = sizeX*sizeY;
 
+            int startTileIndex;
             // Sets random start and finish tiles
             if (randomStartFinish)
             {
-                int startTileIndex = rand.Next(totalSize);
-                level.SetTileAt(startTileIndex, 'S');
+                startTileIndex = rand.Next(totalSize);
+                level.tileList[startTileIndex] = 'S';
                 int finishTileIndex = startTileIndex;
                 while (startTileIndex == finishTileIndex)
                 {
                     finishTileIndex = rand.Next(totalSize);
                 }
-                level.SetTileAt(finishTileIndex, 'F');
+                level.tileList[finishTileIndex] = 'F';
             }
             // Sets start tile in the middle of the left-most column and finish tile in the middle of the right-most column
             else
             {
-                level.SetTileAt(sizeX*(sizeY/2), 'S');
-                level.SetTileAt(sizeX*(sizeY/2+1)-1, 'F');
+                startTileIndex = sizeX*(sizeY/2);
+                level.tileList[sizeX*(sizeY/2+1)-1] = 'F';
             }
+
+            Graph G = new Graph(sizeX, sizeY);
+            List<Vertex> vertices = G.vertices;
+            Prim.RunPrims(startTileIndex, G);
 
             for (int i = 0; i < sizeY; i++)
             {
                 for (int j = 0; j < sizeX; j++)
                 {
-                    
+                    int currIndex = i*sizeX+j;
+                    Vertex curr = vertices[currIndex];
+                    if (j < sizeX-1)
+                    {
+                        if (curr.edges.Contains(vertices[currIndex+1]))
+                        {
+                            level.verticalEdgeList[currIndex+1] = 'W';
+                        }
+                    }
+                    if (i < sizeY-1)
+                    {
+                        if (curr.edges.Contains(vertices[currIndex+sizeX]))
+                        {
+                            level.verticalEdgeList[currIndex+sizeX] = 'W';
+                        }
+                    }
                 }
             }
 
