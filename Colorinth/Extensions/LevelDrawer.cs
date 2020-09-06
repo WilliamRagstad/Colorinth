@@ -69,6 +69,30 @@ namespace Colorinth.Extensions
             }
 
             #endregion
+
+            #region Horizontal Walls
+
+            for (int i = 0; i < level.horizontalEdgeList.Count; i++)
+            {
+                if (level.horizontalEdgeList[i] == 'W')
+                {
+
+                }
+            }
+
+            #endregion
+
+            #region Vertical Walls
+            
+            for (int i = 0; i < level.verticalEdgeList.Count; i++)
+            {
+                if (level.verticalEdgeList[i] == 'W')
+                {
+
+                }
+            }
+
+            #endregion
         }
     }
 }
