@@ -16,16 +16,29 @@ namespace Colorinth.Extensions
         private static readonly int _spriteWidth = 195;
         private static readonly float _spriteScale = 1 / 3f;
 
-        #endregion
-        #region Textures
-        
-        private static Texture2D _startTexture, _finishTexture;
+        private static readonly Dictionary<char, Color> _colors = new Dictionary<char, Color>
+        {
+            {'R', Color.Red},
+            {'B', Color.Blue},
+            {'Y', Color.Yellow},
+            {'P', Color.Purple},
+            {'G', Color.Green},
+            {'O', Color.Orange},
+        };
 
         #endregion
+
+        #region Textures
+        
+        private static Texture2D _startTexture, _finishTexture, _buttonTexture;
+
+        #endregion
+
         public static void Initialize(ContentManager content)
         {
             _startTexture = content.Load<Texture2D>("start_sprite");
             _finishTexture = content.Load<Texture2D>("finish_sprite");
+            _buttonTexture= content.Load<Texture2D>("button_sprite");
         }
 
         public static void DrawLevel(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Level level, Rectangle area, int areaScale, int wallThickness)
@@ -40,8 +53,9 @@ namespace Colorinth.Extensions
 
             #endregion
             #region Lambda Functions
-
+            
             void DrawIcon(Texture2D texture, int x, int y) => spriteBatch.Draw(texture, new Vector2(x, y), null, Color.White, 0, spriteOrigin, spriteScale, SpriteEffects.None, 0);
+            void DrawButton(Color color, int x, int y) => spriteBatch.Draw(_buttonTexture, new Vector2(x, y), null, color, 0, spriteOrigin, spriteScale, SpriteEffects.None, 0);
 
             #endregion
 
@@ -63,6 +77,14 @@ namespace Colorinth.Extensions
                             break;
                         case 'F':
                             DrawIcon(_finishTexture, cx, cy);
+                            break;
+                        case 'R':
+                        case 'B':
+                        case 'Y':
+                        case 'G':
+                        case 'P':
+                        case 'O':
+                            DrawButton(_colors[tile], cx, cy);
                             break;
                     }
                 }
