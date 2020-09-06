@@ -7,8 +7,7 @@ namespace Colorinth.LevelGeneration
     {
         public static Level GenerateLevel(byte numOfColors, byte sizeX, byte sizeY, double buttonRatio, bool randomStartFinish)
         {
-            Level level = new Level();
-            level.Initialize(sizeX, sizeY);
+            Level level = new Level(sizeX, sizeY);
 
             Random rand = new Random();
             int totalSize = sizeX*sizeY;
