@@ -25,7 +25,7 @@ namespace Colorinth.Extensions
         {
             _playerTexture = content.Load<Texture2D>("player");
         }
-        public static void DrawPlayer(this SpriteBatch spriteBatch, GraphicsDeviceManager graphicsDevice, Level level, Rectangle area, int areaScale)
+        public static void DrawPlayer(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Level level, Player player, Rectangle area, int areaScale)
         {
             #region Local Vars
             
@@ -34,6 +34,15 @@ namespace Colorinth.Extensions
             
             Vector2 spriteOrigin = new Vector2(_spriteWidth / 2f);
             float spriteScale = areaScale / 50f * _spriteScale;
+
+            #endregion
+
+            #region Player
+
+            int cx = area.X + tileOffsetX + player.X * areaScale * 2;
+            int cy = area.Y + tileOffsetY + player.Y * areaScale * 2;
+
+            spriteBatch.Draw(_playerTexture, new Vector2(cx, cy), null, Color.White, 0, spriteOrigin, spriteScale, SpriteEffects.None, 0);
 
             #endregion
         }
