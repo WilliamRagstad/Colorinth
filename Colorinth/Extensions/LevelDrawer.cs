@@ -32,7 +32,7 @@ namespace Colorinth.Extensions
             int tileOffsetX = area.Width / level.SizeX / 2; //  -  ;
             int tileOffsetY = area.Height / level.SizeY / 2; //  -  _spriteWidth / 2;
             
-            Vector2 spriteOrigin = new Vector2(_spriteWidth / 2);
+            Vector2 spriteOrigin = new Vector2(_spriteWidth / 2f);
             float spriteScale = areaScale / 50f * _spriteScale;
 
             for (int y = 0; y < level.SizeY; y++)

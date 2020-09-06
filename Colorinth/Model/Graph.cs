@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Colorinth.Graph
+namespace Colorinth.Model
 {
     public class Graph
     {

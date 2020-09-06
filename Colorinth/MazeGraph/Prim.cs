@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System;
+using Colorinth.Model;
 
 namespace Colorinth.Graph
 {
     public static class Prim
     {
-        public static void runPrims(int startIndex, Graph G)
+        public static void runPrims(int startIndex, Model.Graph G)
         {
             int sizeX = G.sizeX;
             int sizeY = G.sizeY;
