@@ -48,14 +48,14 @@ namespace Colorinth.Generators
                     {
                         if (curr.edges.Contains(vertices[currIndex+1]))
                         {
-                            level.verticalEdgeList[currIndex+1] = 'W';
+                            level.verticalEdgeList[currIndex-(curr.coordinateY+1)] = 'W';
                         }
                     }
                     if (i < sizeY-1)
                     {
                         if (curr.edges.Contains(vertices[currIndex+sizeX]))
                         {
-                            level.verticalEdgeList[currIndex+sizeX] = 'W';
+                            level.horizontalEdgeList[currIndex] = 'W';
                         }
                     }
                 }

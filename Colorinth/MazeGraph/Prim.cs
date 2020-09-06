@@ -48,9 +48,9 @@ namespace Colorinth.MazeGraph
                 walls1.Add(cellAbove);
             }
 
-            while (walls1.Count < 0)
+            while (walls1.Count > 0)
             {
-                int wallIndex = rand.Next(totalSize); 
+                int wallIndex = rand.Next(walls1.Count); 
                 currCell = null;
                 if (walls1[wallIndex].visited == true && walls2[wallIndex].visited == false)
                 {
@@ -59,8 +59,8 @@ namespace Colorinth.MazeGraph
                 }
                 else if (walls1[wallIndex].visited == false && walls2[wallIndex].visited == true)
                 {
-                    currCell = walls2[wallIndex];
-                    oldCell = walls1[wallIndex];
+                    currCell = walls1[wallIndex];
+                    oldCell = walls2[wallIndex];
                 }
                 if (currCell != null) {
                     currCell.visited = true;
@@ -103,10 +103,9 @@ namespace Colorinth.MazeGraph
                             walls1.Add(cellAbove);
                         }
                     }
-                    
-                    walls1.RemoveAt(wallIndex);
-                    walls2.RemoveAt(wallIndex);
                 }
+                walls1.RemoveAt(wallIndex);
+                walls2.RemoveAt(wallIndex);
             }
         }
     }
