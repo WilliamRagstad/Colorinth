@@ -35,6 +35,7 @@ namespace Colorinth.Generators
             }
 
             Graph G = new Graph(sizeX, sizeY);
+            level.G = G;
             List<Vertex> vertices = G.vertices;
             Prim.RunPrims(startTileIndex, G);
 
@@ -77,14 +78,18 @@ namespace Colorinth.Generators
             int numButtonsLeft = (int) (buttonRatio*totalSize);
             // Red, blue, yellow, green, purple, orange
             List<int> numOfEachButton = new List<int>();
-            Console.WriteLine("{0}", numButtonsLeft);
             for (int i = 0; i < numOfColors; i++)
             {
                 numOfEachButton.Add((int)(Math.Ceiling((double)numButtonsLeft/numColorsLeft)));
                 numButtonsLeft -= numOfEachButton[i];
                 numColorsLeft--;
-                Console.WriteLine("{0}", numOfEachButton[i]);
             }
+
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                vertices[i].visited = false;
+            }
+
 
             return level;
         }
