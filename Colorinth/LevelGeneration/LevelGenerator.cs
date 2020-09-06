@@ -56,8 +56,6 @@ namespace Colorinth.LevelGeneration
                 Console.WriteLine("{0}", numOfEachButton[i]);
             }
 
-
-
             return level;
         }
     }
