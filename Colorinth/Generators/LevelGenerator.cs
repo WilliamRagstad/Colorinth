@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Colorinth.Model;
 using Colorinth.MazeGraph;
 
-namespace Colorinth.LevelGeneration
+namespace Colorinth.Generators
 {
     public static class LevelGenerator
     {

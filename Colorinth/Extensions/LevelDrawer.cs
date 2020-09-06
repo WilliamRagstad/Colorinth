@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Colorinth.LevelGeneration;
+using Colorinth.Generators;
 using Colorinth.Model;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;

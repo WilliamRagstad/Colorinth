@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using Colorinth.Extensions;
-using Colorinth.Model;
-using Colorinth.LevelGeneration;
+using Colorinth.Generators;
 using Colorinth.Model;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
