@@ -75,7 +75,7 @@ namespace Colorinth
             base.Initialize();
 
             // Generate Level
-            _currentLevel = LevelGenerator.GenerateLevel(6, 5, 5, 0.44, false);
+            _currentLevel = LevelGenerator.GenerateLevel(6, 4, 4, 0.44, false);
         }
 
         protected override void LoadContent()

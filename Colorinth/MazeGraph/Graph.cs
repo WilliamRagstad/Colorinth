@@ -13,8 +13,15 @@ namespace Colorinth.Graph
             this.sizeX = sizeX;
             this.sizeY = sizeY;
             vertices = new List<Vertex>();
-            for (int i = 0; i < totalSize; i++) {
-                vertices.Add(new Vertex());
+            for (byte i = 0; i < sizeX; i++)
+            {
+                for (byte j = 0; j < sizeY; j++)
+                {
+                    vertices.Add(new Vertex());
+                    vertices[i*j].coordinateX = i;
+                    vertices[i*j].coordinateY = j;
+                    vertices[i*j].index = i*j;
+                }
             }
         }
     }
