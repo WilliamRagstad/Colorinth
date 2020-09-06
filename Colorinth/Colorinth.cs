@@ -17,8 +17,8 @@ namespace Colorinth
 
         #region Globals
 
-        private bool isFullscreen = false;
-        private bool fullscreenChanged = false;
+        private bool _isFullscreen = false;
+        private bool _fullscreenChanged = false;
 
         #endregion
 
@@ -53,14 +53,14 @@ namespace Colorinth
 
         private void OnResize(object sender, EventArgs e)
         {
-            if (!isFullscreen && !fullscreenChanged)
+            if (!_isFullscreen && !_fullscreenChanged)
             {
                 _graphics.PreferredBackBufferWidth = _graphics.GraphicsDevice.Viewport.Width;
                 _graphics.PreferredBackBufferHeight = _graphics.GraphicsDevice.Viewport.Height;
                 _graphics.ApplyChanges();
             }
 
-            fullscreenChanged = false;
+            _fullscreenChanged = false;
         }
 
         protected override void Initialize()
@@ -70,8 +70,10 @@ namespace Colorinth
 
             _graphics.PreferredBackBufferWidth = _gameWindowedSize.Width;
             _graphics.PreferredBackBufferHeight = _gameWindowedSize.Height;
-            _graphics.IsFullScreen = isFullscreen;
+            _graphics.IsFullScreen = _isFullscreen;
             _graphics.ApplyChanges();
+
+            LevelDrawer.Initialize(Content);
 
             base.Initialize();
         }
@@ -87,7 +89,7 @@ namespace Colorinth
 
         private void ToggleFullscreen()
         {
-            if (isFullscreen)
+            if (_isFullscreen)
             {
                 _graphics.PreferredBackBufferWidth = _gameWindowedSize.Width;
                 _graphics.PreferredBackBufferHeight = _gameWindowedSize.Height;
@@ -98,9 +100,9 @@ namespace Colorinth
                 _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             }
 
-            fullscreenChanged = true;
-            isFullscreen = !isFullscreen;
-            _graphics.IsFullScreen = isFullscreen;
+            _fullscreenChanged = true;
+            _isFullscreen = !_isFullscreen;
+            _graphics.IsFullScreen = _isFullscreen;
             _graphics.ApplyChanges();
         }
 
