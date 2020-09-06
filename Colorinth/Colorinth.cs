@@ -72,6 +72,7 @@ namespace Colorinth
             _graphics.ApplyChanges();
             
             LevelDrawer.Initialize(Content);
+            PlayerDrawer.Initialize(Content);
             base.Initialize();
 
             // Generate Level
