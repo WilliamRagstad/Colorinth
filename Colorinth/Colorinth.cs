@@ -18,6 +18,7 @@ namespace Colorinth
         #region Globals
 
         private bool isFullscreen = false;
+        private bool fullscreenChanged = false;
 
         #endregion
 
@@ -52,9 +53,14 @@ namespace Colorinth
 
         private void OnResize(object sender, EventArgs e)
         {
-            _graphics.PreferredBackBufferWidth = _graphics.GraphicsDevice.Viewport.Width;
-            _graphics.PreferredBackBufferHeight = _graphics.GraphicsDevice.Viewport.Height;
-            _graphics.ApplyChanges();
+            if (!isFullscreen && !fullscreenChanged)
+            {
+                _graphics.PreferredBackBufferWidth = _graphics.GraphicsDevice.Viewport.Width;
+                _graphics.PreferredBackBufferHeight = _graphics.GraphicsDevice.Viewport.Height;
+                _graphics.ApplyChanges();
+            }
+
+            fullscreenChanged = false;
         }
 
         protected override void Initialize()
@@ -91,7 +97,8 @@ namespace Colorinth
                 _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
                 _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             }
-                
+
+            fullscreenChanged = true;
             isFullscreen = !isFullscreen;
             _graphics.IsFullScreen = isFullscreen;
             _graphics.ApplyChanges();
@@ -122,7 +129,7 @@ namespace Colorinth
 
             // Draw the background game area
             _spriteBatch.DrawRect(GraphicsDevice, _gameArea, _gameBackgroundColor);
-            _spriteBatch.DrawGrid(GraphicsDevice, new Vector2(_gameArea.X, _gameArea.Y), 6, _gameAreaWidth * 2, _gameAreaWidth * 2, _gridColor, 5);
+            _spriteBatch.DrawGrid(GraphicsDevice, new Vector2(_gameArea.X, _gameArea.Y), 2, _gameAreaWidth * 2, _gameAreaWidth * 2, _gridColor, 5);
 
             _spriteBatch.DrawLevel(GraphicsDevice, _currentLevel, _gameArea);
 
