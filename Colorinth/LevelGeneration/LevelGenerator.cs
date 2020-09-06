@@ -27,8 +27,8 @@ namespace Colorinth.LevelGeneration
             // Sets start tile in the middle of the left-most column and finish tile in the middle of the right-most column
             else
             {
-                level.SetTileAt(sizeX*(sizeY/2-1)-1, 'S');
-                level.SetTileAt(sizeX*(sizeY/2-1)-1+sizeX, 'F');
+                level.SetTileAt(sizeX*(sizeY/2), 'S');
+                level.SetTileAt(sizeX*(sizeY/2+1), 'F');
             }
 
             // Creates lists containing all colors that will be used, based on the argument numOfColors
