@@ -25,7 +25,7 @@ namespace Colorinth
 
         private Vector2 _center => new Vector2(_graphics.PreferredBackBufferWidth / 2f, _graphics.PreferredBackBufferHeight / 2f);
 
-        private Size _gameWindowedSize = new Size(800, 800);
+        private Size _gameWindowedSize = new Size(1200, 800);
         private int _gameAreaWidth = 200;
         private Rectangle _gameArea => new Rectangle((int)_center.X - _gameAreaWidth, (int)_center.Y - _gameAreaWidth, _gameAreaWidth * 2, _gameAreaWidth * 2);
 
@@ -35,6 +35,7 @@ namespace Colorinth
 
         private readonly Color _backgroundColor = new Color(90, 90, 90);
         private readonly Color _gameBackgroundColor = new Color(50, 50, 50);
+        private readonly Color _gridColor = new Color(70, 70, 70);
 
         #endregion
 
@@ -43,6 +44,15 @@ namespace Colorinth
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            Window.AllowUserResizing = true;
+            Window.ClientSizeChanged += OnResize;
+        }
+
+        private void OnResize(object sender, EventArgs e)
+        {
+            _graphics.PreferredBackBufferWidth = _graphics.GraphicsDevice.Viewport.Width;
+            _graphics.PreferredBackBufferHeight = _graphics.GraphicsDevice.Viewport.Height;
+            _graphics.ApplyChanges();
         }
 
         protected override void Initialize()
@@ -99,7 +109,6 @@ namespace Colorinth
 
             // _gameAreaWidth = (int)(Math.Sin(gameTime.TotalGameTime.TotalMilliseconds * 0.005) * 100 + 200); // Good for testing drawing functions
 
-
             base.Update(gameTime);
         }
 
@@ -110,8 +119,8 @@ namespace Colorinth
             _spriteBatch.Begin();
 
             _spriteBatch.DrawRect(GraphicsDevice, _gameArea, _gameBackgroundColor);
-            _spriteBatch.DrawLine(GraphicsDevice, new Vector2(_gameArea.Left, _gameArea.Top), new Vector2(_gameArea.Bottom, _gameArea.Left), Color.White, 5);
-            //_spriteBatch.DrawLine(GraphicsDevice, new Vector2(_gameArea.Left, _gameArea.Top), 400, (float)(0 * (Math.PI / 180)), Color.White, 5);
+
+            _spriteBatch.DrawGrid(GraphicsDevice, new Vector2(_gameArea.X, _gameArea.Y), 6, _gameAreaWidth * 2, _gameAreaWidth * 2, _gridColor);
 
             _spriteBatch.End();
 
