@@ -85,10 +85,27 @@ namespace Colorinth.Generators
                 numColorsLeft--;
             }
 
+            // Assign buttons to tiles
+            int randomTileIndex;
+            for (int i = 0; i < numOfColors; i++)
+            {
+                for (int j = 0; j < numOfEachButton[i]; j++)
+                {
+                    while (true) {
+                        randomTileIndex = rand.Next(totalSize);
+                        if (level.tileList[randomTileIndex] == '.')
+                        {
+                            level.tileList[randomTileIndex] = allColors[i];
+                        }
+                }
+                }
+            }
+
             for (int i = 0; i < vertices.Count; i++)
             {
                 vertices[i].visited = false;
             }
+
 
 
             return level;
