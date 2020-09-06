@@ -86,7 +86,7 @@ namespace Colorinth.Extensions
                     int x = area.X + (i % level.SizeX) * areaScale * 2;
                     int y = area.Y + i / level.SizeY * areaScale * 2 + wallHorizontalLength;
 
-                    spriteBatch.DrawLine(graphicsDevice, new Vector2(x, y), wallHorizontalLength, (float)(-90 * Math.PI / 180f), Color.AliceBlue, wallThickness);
+                    spriteBatch.DrawLine(graphicsDevice, new Vector2(x, y), wallHorizontalLength + wallThickness, (float)(-90 * Math.PI / 180f), Color.AliceBlue, wallThickness, 0, new Vector2(wallThickness / 2f));
                 }
             }
 
@@ -101,7 +101,7 @@ namespace Colorinth.Extensions
                     int x = area.X + (i % (level.SizeX - 1)) * areaScale * 2 + wallHorizontalLength;
                     int y = area.Y + (i / (level.SizeY - 1)) * areaScale * 2;
 
-                    spriteBatch.DrawLine(graphicsDevice, new Vector2(x, y), wallHorizontalLength, (float)(0 * Math.PI / 180f), Color.AliceBlue, wallThickness);
+                    spriteBatch.DrawLine(graphicsDevice, new Vector2(x, y), wallHorizontalLength + wallThickness, (float)(0 * Math.PI / 180f), Color.AliceBlue, wallThickness, 0, new Vector2(wallThickness / 2f));
                 }
             }
             #endregion

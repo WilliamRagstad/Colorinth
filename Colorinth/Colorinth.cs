@@ -32,13 +32,14 @@ namespace Colorinth
 
         private Size _gameWindowedSize = new Size(1200, 800);
         private int _gameAreaScale = 50;
+        private int _wallThickness = 5;
         private Rectangle _gameArea => new Rectangle((int)_center.X - _currentLevel.SizeX * _gameAreaScale, (int)_center.Y - _currentLevel.SizeY * _gameAreaScale, _currentLevel.SizeX * _gameAreaScale * 2, _currentLevel.SizeY * _gameAreaScale * 2);
 
         private Level _currentLevel;
         private Player _player;
 
         private Song _themeSong;
-        private SoundEffect _walkSoundEffect, _startSoundEffect, _finishSoundEffect;
+        private SoundEffect _startSoundEffect, _finishSoundEffect;
 
         #endregion
 
@@ -79,6 +80,8 @@ namespace Colorinth
             _graphics.IsFullScreen = _isFullscreen;
             _graphics.ApplyChanges();
             
+            Player.Initialize(Content);
+
             LevelDrawer.Initialize(Content);
             PlayerDrawer.Initialize(Content);
             base.Initialize();
@@ -92,7 +95,6 @@ namespace Colorinth
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _themeSong = Content.Load<Song>("theme_song");
-            _walkSoundEffect = Content.Load<SoundEffect>("walk_effect");
             _startSoundEffect = Content.Load<SoundEffect>("start_effect");
             _finishSoundEffect = Content.Load<SoundEffect>("finish_effect");
             Start();
@@ -139,32 +141,10 @@ namespace Colorinth
 
             if (kb.IsKeyDown(Keys.F11)) ToggleFullscreen();
 
-            if ((gameTime.TotalGameTime.Subtract(_previousMove).TotalMilliseconds > 200) &&
-                (kb.IsKeyDown(Keys.Left) || kb.IsKeyDown(Keys.Right) || kb.IsKeyDown(Keys.Up) || kb.IsKeyDown(Keys.Down))
-                )
+            if (gameTime.TotalGameTime.Subtract(_previousMove).TotalMilliseconds > 200 &&
+                (kb.IsKeyDown(Keys.Left) || kb.IsKeyDown(Keys.Right) || kb.IsKeyDown(Keys.Up) || kb.IsKeyDown(Keys.Down)))
             {
-                if (kb.IsKeyDown(Keys.Left) && _player.X > 0)
-                {
-                    _player.X--;
-                    SoundEffectManager.Play(_walkSoundEffect);
-                }
-                else if (kb.IsKeyDown(Keys.Right) && _player.X < _currentLevel.SizeX - 1)
-                {
-                    _player.X++;
-                    SoundEffectManager.Play(_walkSoundEffect);
-                }
-
-                if (kb.IsKeyDown(Keys.Up) && _player.Y > 0)
-                {
-                    _player.Y--;
-                    SoundEffectManager.Play(_walkSoundEffect);
-                }
-                else if (kb.IsKeyDown(Keys.Down) && _player.Y < _currentLevel.SizeY - 1)
-                {
-                    _player.Y++;
-                    SoundEffectManager.Play(_walkSoundEffect);
-                }
-
+                _player.Move(kb, _currentLevel);
                 _previousMove = gameTime.TotalGameTime;
             }
 
@@ -180,11 +160,11 @@ namespace Colorinth
 
             // Draw the background game area
             _spriteBatch.DrawRect(GraphicsDevice, _gameArea, _gameBackgroundColor);
-            _spriteBatch.DrawGrid(GraphicsDevice, _gameArea, _currentLevel.SizeX, _currentLevel.SizeY, _gridColor, 5);
+            _spriteBatch.DrawGrid(GraphicsDevice, _gameArea, _currentLevel.SizeX, _currentLevel.SizeY, _gridColor, _wallThickness);
             // Draw outlined rectangle
-            _spriteBatch.DrawGrid(GraphicsDevice, _gameArea, 1, 1, Color.White, 5);
+            _spriteBatch.DrawGrid(GraphicsDevice, _gameArea, 1, 1, Color.White, _wallThickness * 2);
             // Draw the level
-            _spriteBatch.DrawLevel(GraphicsDevice, _currentLevel, _gameArea, _gameAreaScale, 5);
+            _spriteBatch.DrawLevel(GraphicsDevice, _currentLevel, _gameArea, _gameAreaScale, _wallThickness * 2);
             // Draw player
             _spriteBatch.DrawPlayer(GraphicsDevice, _currentLevel, _player, _gameArea, _gameAreaScale);
 
