@@ -98,7 +98,7 @@ namespace Colorinth.Generators
                             level.tileList[randomTileIndex] = allColors[i];
                             break;
                         }
-                }
+                    }
                 }
             }
 
@@ -106,8 +106,6 @@ namespace Colorinth.Generators
             {
                 vertices[i].visited = false;
             }
-
-
 
             return level;
         }
