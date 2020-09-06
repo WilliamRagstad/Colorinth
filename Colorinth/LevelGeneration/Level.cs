@@ -9,7 +9,7 @@ namespace Colorinth.LevelGeneration
         private List<char> horizontalEdgeList;
         private List<char> verticalEdgeList;
 
-        public void Initialize(byte sizeX, byte sizeY)
+        public Level(byte sizeX, byte sizeY)
         {
             this.sizeX = sizeX;
             this.sizeY = sizeY;
