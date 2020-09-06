@@ -3,6 +3,7 @@ using System.Drawing;
 using Colorinth.Extensions;
 using Colorinth.Model;
 using Colorinth.LevelGeneration;
+using Colorinth.Model;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -32,6 +33,7 @@ namespace Colorinth
         private Rectangle _gameArea => new Rectangle((int)_center.X - _currentLevel.SizeX * _gameAreaScale, (int)_center.Y - _currentLevel.SizeY * _gameAreaScale, _currentLevel.SizeX * _gameAreaScale * 2, _currentLevel.SizeY * _gameAreaScale * 2);
 
         private Level _currentLevel;
+        private Player _player;
 
         #endregion
 
@@ -78,6 +80,7 @@ namespace Colorinth
 
             // Generate Level
             _currentLevel = LevelGenerator.GenerateLevel(6, 4, 4, 0.44, false);
+            _player = new Player(0, 0);
         }
 
         protected override void LoadContent()
@@ -134,6 +137,8 @@ namespace Colorinth
             _spriteBatch.DrawGrid(GraphicsDevice, _gameArea, _currentLevel.SizeX, _currentLevel.SizeY, _gridColor, 5);
             // Draw the level
             _spriteBatch.DrawLevel(GraphicsDevice, _currentLevel, _gameArea, _gameAreaScale);
+            // Draw player
+            _spriteBatch.DrawPlayer(GraphicsDevice, _currentLevel, _player, _gameArea, _gameAreaScale);
 
             _spriteBatch.End();
 
