@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System;
 using Colorinth.Model;
 
-namespace Colorinth.Graph
+namespace Colorinth.MazeGraph
 {
     public static class Prim
     {
-        public static void runPrims(int startIndex, Model.Graph G)
+        public static void RunPrims(int startIndex, Graph G)
         {
             int sizeX = G.sizeX;
             int sizeY = G.sizeY;
