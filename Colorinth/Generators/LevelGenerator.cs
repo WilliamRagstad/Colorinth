@@ -96,6 +96,7 @@ namespace Colorinth.Generators
                         if (level.tileList[randomTileIndex] == '.')
                         {
                             level.tileList[randomTileIndex] = allColors[i];
+                            break;
                         }
                 }
                 }

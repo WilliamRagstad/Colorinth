@@ -73,7 +73,7 @@ namespace Colorinth.Model
         private bool WallUnder(Level level)
         {
             int i = Y * level.SizeX + X;
-            return level.G.vertices[i].edges.Contains(level.G.vertices[i + level.SizeX]);
+            return !level.G.vertices[i].edges.Contains(level.G.vertices[i + level.SizeX]);
         }
     }
 }
