@@ -27,8 +27,8 @@ namespace Colorinth
         private Vector2 _center => new Vector2(_graphics.PreferredBackBufferWidth / 2f, _graphics.PreferredBackBufferHeight / 2f);
 
         private Size _gameWindowedSize = new Size(1200, 800);
-        private int _gameAreaWidth = 200;
-        private Rectangle _gameArea => new Rectangle((int)_center.X - _gameAreaWidth, (int)_center.Y - _gameAreaWidth, _gameAreaWidth * 2, _gameAreaWidth * 2);
+        private int _gameAreaScale = 50;
+        private Rectangle _gameArea => new Rectangle((int)_center.X - _currentLevel.SizeX * _gameAreaScale, (int)_center.Y - _currentLevel.SizeY * _gameAreaScale, _currentLevel.SizeX * _gameAreaScale * 2, _currentLevel.SizeY * _gameAreaScale * 2);
 
         private Level _currentLevel;
 
@@ -66,16 +66,16 @@ namespace Colorinth
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            _currentLevel = LevelGenerator.GenerateLevel(6, 5, 5, 0.44, false);
-
             _graphics.PreferredBackBufferWidth = _gameWindowedSize.Width;
             _graphics.PreferredBackBufferHeight = _gameWindowedSize.Height;
             _graphics.IsFullScreen = _isFullscreen;
             _graphics.ApplyChanges();
-
+            
             LevelDrawer.Initialize(Content);
-
             base.Initialize();
+
+            // Generate Level
+            _currentLevel = LevelGenerator.GenerateLevel(6, 5, 5, 0.44, false);
         }
 
         protected override void LoadContent()
@@ -118,8 +118,6 @@ namespace Colorinth
 
             if (kb.IsKeyDown(Keys.F11)) ToggleFullscreen();
 
-            // _gameAreaWidth = (int)(Math.Sin(gameTime.TotalGameTime.TotalMilliseconds * 0.005) * 100 + 200); // Good for testing drawing functions
-
             base.Update(gameTime);
         }
 
@@ -131,8 +129,8 @@ namespace Colorinth
 
             // Draw the background game area
             _spriteBatch.DrawRect(GraphicsDevice, _gameArea, _gameBackgroundColor);
-            _spriteBatch.DrawGrid(GraphicsDevice, new Vector2(_gameArea.X, _gameArea.Y), 2, _gameAreaWidth * 2, _gameAreaWidth * 2, _gridColor, 5);
-
+            _spriteBatch.DrawGrid(GraphicsDevice, _gameArea, _currentLevel.SizeX, _currentLevel.SizeY, _gridColor, 5);
+            // Draw the level
             _spriteBatch.DrawLevel(GraphicsDevice, _currentLevel, _gameArea);
 
             _spriteBatch.End();
