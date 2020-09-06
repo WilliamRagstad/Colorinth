@@ -51,7 +51,7 @@ namespace Colorinth.LevelGeneration
             for (int i = 0; i < numOfColors; i++)
             {
                 numOfEachButton.Add((int)(Math.Ceiling((double)numButtonsLeft/numColorsLeft)));
-                numButtonsLeft = numButtonsLeft - numOfEachButton[i];
+                numButtonsLeft -= numOfEachButton[i];
                 numColorsLeft--;
                 Console.WriteLine("{0}", numOfEachButton[i]);
             }
