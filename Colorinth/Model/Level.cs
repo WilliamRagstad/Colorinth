@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Colorinth.LevelGeneration
+namespace Colorinth.Model
 {
     public class Level
     {
