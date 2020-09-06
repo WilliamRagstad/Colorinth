@@ -20,7 +20,7 @@ namespace Colorinth.Model
                     Vertex v = new Vertex();
                     v.coordinateX = i;
                     v.coordinateY = j;
-                    v.index = i*j;
+                    v.index = j * sizeY + i;
                     vertices.Add(v);
                 }
             }
