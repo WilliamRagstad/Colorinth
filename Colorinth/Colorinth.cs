@@ -66,7 +66,6 @@ namespace Colorinth
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            _currentLevel = LevelGenerator.GenerateLevel(6, 3, 2, 0.44, false);
 
             _graphics.PreferredBackBufferWidth = _gameWindowedSize.Width;
             _graphics.PreferredBackBufferHeight = _gameWindowedSize.Height;
@@ -133,7 +132,7 @@ namespace Colorinth
             _spriteBatch.DrawRect(GraphicsDevice, _gameArea, _gameBackgroundColor);
             _spriteBatch.DrawGrid(GraphicsDevice, _gameArea, _currentLevel.SizeX, _currentLevel.SizeY, _gridColor, 5);
             // Draw the level
-            _spriteBatch.DrawLevel(GraphicsDevice, _currentLevel, _gameArea);
+            _spriteBatch.DrawLevel(GraphicsDevice, _currentLevel, _gameArea, _gameAreaScale);
 
             _spriteBatch.End();
 
