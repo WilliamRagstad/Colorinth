@@ -10,17 +10,20 @@ namespace Colorinth.Generators
         public static Level GenerateLevel(byte numOfColors, byte sizeX, byte sizeY, double buttonRatio, bool randomStartFinish)
         {
             Level level = new Level(sizeX, sizeY);
+            Vertex curr;
+            int currIndex;
 
             Random rand = new Random();
             int totalSize = sizeX*sizeY;
 
             int startTileIndex;
+            int finishTileIndex;
             // Sets random start and finish tiles
             if (randomStartFinish)
             {
                 startTileIndex = rand.Next(totalSize);
                 level.tileList[startTileIndex] = 'S';
-                int finishTileIndex = startTileIndex;
+                finishTileIndex = startTileIndex;
                 while (startTileIndex == finishTileIndex)
                 {
                     finishTileIndex = rand.Next(totalSize);
@@ -31,7 +34,9 @@ namespace Colorinth.Generators
             else
             {
                 startTileIndex = sizeX*(sizeY/2);
-                level.tileList[sizeX*(sizeY/2+1)-1] = 'F';
+                level.tileList[startTileIndex] = 'S';
+                finishTileIndex = sizeX*(sizeY/2+1)-1;
+                level.tileList[finishTileIndex] = 'F';
             }
             level.startX = startTileIndex % sizeX;
             level.startY = startTileIndex / sizeX;
@@ -45,8 +50,8 @@ namespace Colorinth.Generators
             {
                 for (int j = 0; j < sizeX; j++)
                 {
-                    int currIndex = i*sizeX+j;
-                    Vertex curr = vertices[currIndex];
+                    currIndex = i*sizeX+j;
+                    curr = vertices[currIndex];
                     if (j < sizeX-1)
                     {
                         if (!curr.edges.Contains(vertices[currIndex+1]))
@@ -77,7 +82,7 @@ namespace Colorinth.Generators
 
             // Calculate exact number of buttons of each color
             int numColorsLeft = numOfColors;
-            int numButtonsLeft = (int) (buttonRatio*totalSize);
+            int numButtonsLeft = (int) (buttonRatio*(totalSize-2));
             // Red, blue, yellow, green, purple, orange
             List<int> numOfEachButton = new List<int>();
             for (int i = 0; i < numOfColors; i++)
@@ -95,7 +100,7 @@ namespace Colorinth.Generators
                 {
                     while (true) {
                         randomTileIndex = rand.Next(totalSize);
-                        if (level.tileList[randomTileIndex] == '.')
+                        if (level.tileList[randomTileIndex] == '.' && randomTileIndex != startTileIndex && randomTileIndex != finishTileIndex)
                         {
                             level.tileList[randomTileIndex] = allColors[i];
                             break;
@@ -107,6 +112,59 @@ namespace Colorinth.Generators
             for (int i = 0; i < vertices.Count; i++)
             {
                 vertices[i].visited = false;
+            }
+
+            List<char> RedList = new List<char>();
+            List<char> BlueList = new List<char>();
+            List<char> YellowList = new List<char>();
+            List<char> GreenList = new List<char>();
+            List<char> PurpleList = new List<char>();
+            List<char> OrangeList = new List<char>();
+            List<char> redList = new List<char>();
+            List<char> blueList = new List<char>();
+            List<char> yellowList = new List<char>();
+            List<char> greenList = new List<char>();
+            List<char> purpleList = new List<char>();
+            List<char> orangeList = new List<char>();
+
+            for (int i = 0; i < totalSize; i++)
+            {
+                RedList.Add('.');
+                BlueList.Add('.');
+                YellowList.Add('.');
+                GreenList.Add('.');
+                PurpleList.Add('.');
+                OrangeList.Add('.');
+                redList.Add('.');
+                blueList.Add('.');
+                yellowList.Add('.');
+                greenList.Add('.');
+                purpleList.Add('.');
+                orangeList.Add('.');
+            }
+
+            char[] currColors = {'r', 'b', 'y', 'g', 'p', 'o'};
+            
+            int currTileIndex = startTileIndex;
+            curr = vertices[currTileIndex];
+            while(true)
+            {
+                if (currColors[0] == 'r') redList[currTileIndex] = 'r';
+                else RedList[currTileIndex] = 'R';
+                if (currColors[1] == 'b') blueList[currTileIndex] = 'b';
+                else BlueList[currTileIndex] = 'B';
+                if (currColors[2] == 'y') blueList[currTileIndex] = 'y';
+                else BlueList[currTileIndex] = 'Y';
+                if (currColors[3] == 'g') blueList[currTileIndex] = 'g';
+                else BlueList[currTileIndex] = 'G';
+                if (currColors[4] == 'p') blueList[currTileIndex] = 'p';
+                else BlueList[currTileIndex] = 'P';
+                if (currColors[5] == 'o') blueList[currTileIndex] = 'o';
+                else BlueList[currTileIndex] = 'O';
+
+                if (curr.index == finishTileIndex)
+                curr = curr.edges[rand.Next(curr.edges.Count)];
+                break;
             }
 
             return level;
