@@ -87,7 +87,7 @@ namespace Colorinth
             base.Initialize();
 
             // Generate Level
-            _currentLevel = LevelGenerator.GenerateLevel(6, 7, 7, 0.30, false);
+            _currentLevel = LevelGenerator.GenerateLevel(6, 11, 11, 0.30, false);
             _player = new Player(_currentLevel.StartX, _currentLevel.StartY);
             _gameAreaScale = CalculateGameScale(_currentLevel, 50);
 
