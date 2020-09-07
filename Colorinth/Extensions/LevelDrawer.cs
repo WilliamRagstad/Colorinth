@@ -18,12 +18,12 @@ namespace Colorinth.Extensions
 
         private static readonly Dictionary<char, Color> _colors = new Dictionary<char, Color>
         {
-            {'R', Color.Red},
-            {'B', Color.Blue},
-            {'Y', Color.Yellow},
-            {'P', Color.Purple},
-            {'G', Color.Green},
-            {'O', Color.Orange},
+            {'R', new Color(235, 86, 75)}, // 176, 48, 92
+            {'B', new Color(75, 91, 171)},
+            {'Y', new Color(255, 228, 120)},
+            {'P', new Color(90, 38, 94)},
+            {'G', new Color(60, 163, 112)},
+            {'O', new Color(255, 181, 112)},
         };
 
         #endregion
