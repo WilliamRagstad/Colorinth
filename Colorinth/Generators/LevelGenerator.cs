@@ -127,7 +127,7 @@ namespace Colorinth.Generators
             List<char> purpleList = new List<char>();
             List<char> orangeList = new List<char>();
 
-            for (int i = 0; i < totalSize; i++)
+            for (int i = 0; i <= totalSize; i++)
             {
                 RedList.Add('.');
                 BlueList.Add('.');
@@ -145,29 +145,80 @@ namespace Colorinth.Generators
 
             char[] currColors = {'r', 'b', 'y', 'g', 'p', 'o'};
             
-            int currTileIndex = startTileIndex;
-            curr = vertices[currTileIndex];
+            Vertex currVertex = vertices[startTileIndex];
             while(true)
             {
-                if (currColors[0] == 'r') redList[currTileIndex] = 'r';
-                else RedList[currTileIndex] = 'R';
-                if (currColors[1] == 'b') blueList[currTileIndex] = 'b';
-                else BlueList[currTileIndex] = 'B';
-                if (currColors[2] == 'y') blueList[currTileIndex] = 'y';
-                else BlueList[currTileIndex] = 'Y';
-                if (currColors[3] == 'g') blueList[currTileIndex] = 'g';
-                else BlueList[currTileIndex] = 'G';
-                if (currColors[4] == 'p') blueList[currTileIndex] = 'p';
-                else BlueList[currTileIndex] = 'P';
-                if (currColors[5] == 'o') blueList[currTileIndex] = 'o';
-                else BlueList[currTileIndex] = 'O';
+                Console.WriteLine("({0}, {1}) ({2}, {3}, {4}, {5}, {6}, {7})", currVertex.coordinateX, currVertex.coordinateY, currColors[0],
+                currColors[1], currColors[2], currColors[3], currColors[4], currColors[5]);
+                if (currColors[0] == 'r') redList[currVertex.index] = 'r';
+                else RedList[currVertex.index] = 'R';
+                if (currColors[1] == 'b') blueList[currVertex.index] = 'b';
+                else BlueList[currVertex.index] = 'B';
+                if (currColors[2] == 'y') yellowList[currVertex.index] = 'y';
+                else YellowList[currVertex.index] = 'Y';
+                if (currColors[3] == 'g') greenList[currVertex.index] = 'g';
+                else GreenList[currVertex.index] = 'G';
+                if (currColors[4] == 'p') purpleList[currVertex.index] = 'p';
+                else PurpleList[currVertex.index] = 'P';
+                if (currColors[5] == 'o') orangeList[currVertex.index] = 'o';
+                else OrangeList[currVertex.index] = 'O';
+                if (level.tileList[currVertex.index] == 'R')
+                {
+                    if (currColors[0] == 'r') currColors[0] = 'R';
+                    else currColors[0] = 'r';
+                    Console.WriteLine('R');
+                }
+                else if (level.tileList[currVertex.index] == 'B')
+                {
+                    if (currColors[1] == 'b') currColors[1] = 'B';
+                    else currColors[1] = 'b';
+                    Console.WriteLine('B');
+                }
+                else if (level.tileList[currVertex.index] == 'Y')
+                {
+                    if (currColors[2] == 'y') currColors[2] = 'Y';
+                    else currColors[2] = 'y';
+                    Console.WriteLine('Y');
+                }
+                else if (level.tileList[currVertex.index] == 'G')
+                {
+                    if (currColors[3] == 'g') currColors[3] = 'G';
+                    else currColors[3] = 'g';
+                    Console.WriteLine('G');
+                }
+                else if (level.tileList[currVertex.index] == 'P')
+                {
+                    if (currColors[4] == 'p') currColors[4] = 'P';
+                    else currColors[4] = 'p';
+                    Console.WriteLine('P');
+                }
+                else if (level.tileList[currVertex.index] == 'O')
+                {
+                    if (currColors[5] == 'o') currColors[5] = 'O';
+                    else currColors[5] = 'o';
+                    Console.WriteLine('O');
+                }
 
-                if (curr.index == finishTileIndex) break;
+                if (currColors[0] == 'r') redList[currVertex.index] = 'r';
+                else RedList[currVertex.index] = 'R';
+                if (currColors[1] == 'b') blueList[currVertex.index] = 'b';
+                else BlueList[currVertex.index] = 'B';
+                if (currColors[2] == 'y') yellowList[currVertex.index] = 'y';
+                else YellowList[currVertex.index] = 'Y';
+                if (currColors[3] == 'g') greenList[currVertex.index] = 'g';
+                else GreenList[currVertex.index] = 'G';
+                if (currColors[4] == 'p') purpleList[currVertex.index] = 'p';
+                else PurpleList[currVertex.index] = 'P';
+                if (currColors[5] == 'o') orangeList[currVertex.index] = 'o';
+                else OrangeList[currVertex.index] = 'O';
+
+                if (currVertex.index == finishTileIndex) break;
                 
-                curr = curr.edges[rand.Next(curr.edges.Count)];
+                currVertex = currVertex.edges[rand.Next(currVertex.edges.Count)];
             }
             
-            List<char> currColorList = null;
+            List<char> closedColorList = null;
+            List<char> openColorList = null;
             for (int i = 0; i < level.horizontalEdgeList.Count; i++)
             {
                 if (level.horizontalEdgeList[i] == '.')
@@ -177,43 +228,42 @@ namespace Colorinth.Generators
                         int colorIndex = rand.Next(numOfColors);
                         int closed = rand.Next(2);
 
-                        if (closed == 0)
+                        switch (colorIndex)
                         {
-                            switch (colorIndex)
-                            {
-                                case 0: currColorList = redList; break;
-                                case 1: currColorList = blueList; break;
-                                case 2: currColorList = yellowList; break;
-                                case 3: currColorList = greenList; break;
-                                case 4: currColorList = purpleList; break;
-                                case 5: currColorList = orangeList; break;
-                            } 
+                            case 0: openColorList = redList; break;
+                            case 1: openColorList = blueList; break;
+                            case 2: openColorList = yellowList; break;
+                            case 3: openColorList = greenList; break;
+                            case 4: openColorList = purpleList; break;
+                            case 5: openColorList = orangeList; break;
+                                
                         }
-                        else
+                        switch (colorIndex)
                         {
-                            switch (colorIndex)
-                            {
-                                case 0: currColorList = RedList; break;
-                                case 1: currColorList = BlueList; break;
-                                case 2: currColorList = YellowList; break;
-                                case 3: currColorList = GreenList; break;
-                                case 4: currColorList = PurpleList; break;
-                                case 5: currColorList = OrangeList; break;
-                            } 
-                        }
+                            case 0: closedColorList = RedList; break;
+                            case 1: closedColorList = BlueList; break;
+                            case 2: closedColorList = YellowList; break;
+                            case 3: closedColorList = GreenList; break;
+                            case 4: closedColorList = PurpleList; break;
+                            case 5: closedColorList = OrangeList; break;
+                        } 
 
                         if (closed == 1)
                         {
-                            if (currColorList[i] != allColors[colorIndex] || currColorList[i+sizeX] != allColors[colorIndex])
+                            if ((openColorList[i] != allColorsOpen[colorIndex] || openColorList[i+sizeX] != allColorsOpen[colorIndex]) && (closedColorList[i] == allColors[colorIndex] && closedColorList[i+sizeX] == allColors[colorIndex]))
                             {
                                 level.horizontalEdgeList[i] = allColors[colorIndex];
+                                vertices[i].edges.Remove(vertices[i+sizeX]);
+                                vertices[i+sizeX].edges.Remove(vertices[i]);
+                                break;
                             }
                         }
                         else
                         {
-                            if (currColorList[i] != allColorsOpen[colorIndex] || currColorList[i+sizeX] != allColorsOpen[colorIndex])
+                            if ((closedColorList[i] != allColors[colorIndex] || closedColorList[i+sizeX] != allColors[colorIndex]) && (openColorList[i] == allColorsOpen[colorIndex] && openColorList[i+sizeX] == allColorsOpen[colorIndex]))
                             {
                                 level.horizontalEdgeList[i] = allColorsOpen[colorIndex];
+                                break;
                             }
                         }
                     }
@@ -228,43 +278,42 @@ namespace Colorinth.Generators
                         int colorIndex = rand.Next(numOfColors);
                         int closed = rand.Next(2);
 
-                        if (closed == 0)
+                        switch (colorIndex)
                         {
-                            switch (colorIndex)
-                            {
-                                case 0: currColorList = redList; break;
-                                case 1: currColorList = blueList; break;
-                                case 2: currColorList = yellowList; break;
-                                case 3: currColorList = greenList; break;
-                                case 4: currColorList = purpleList; break;
-                                case 5: currColorList = orangeList; break;
-                            } 
+                            case 0: openColorList = redList; break;
+                            case 1: openColorList = blueList; break;
+                            case 2: openColorList = yellowList; break;
+                            case 3: openColorList = greenList; break;
+                            case 4: openColorList = purpleList; break;
+                            case 5: openColorList = orangeList; break;
+                                
                         }
-                        else
+                        switch (colorIndex)
                         {
-                            switch (colorIndex)
-                            {
-                                case 0: currColorList = RedList; break;
-                                case 1: currColorList = BlueList; break;
-                                case 2: currColorList = YellowList; break;
-                                case 3: currColorList = GreenList; break;
-                                case 4: currColorList = PurpleList; break;
-                                case 5: currColorList = OrangeList; break;
-                            } 
-                        }
+                            case 0: closedColorList = RedList; break;
+                            case 1: closedColorList = BlueList; break;
+                            case 2: closedColorList = YellowList; break;
+                            case 3: closedColorList = GreenList; break;
+                            case 4: closedColorList = PurpleList; break;
+                            case 5: closedColorList = OrangeList; break;
+                        } 
 
                         if (closed == 1)
                         {
-                            if (currColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))] != allColors[colorIndex] || currColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))] != allColors[colorIndex])
+                            if ((openColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))] != allColorsOpen[colorIndex] || openColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))+1] != allColorsOpen[colorIndex]) && (closedColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))] == allColors[colorIndex] && closedColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))+1] == allColors[colorIndex]))
                             {
-                                level.horizontalEdgeList[i] = allColors[colorIndex];
+                                level.verticalEdgeList[i] = allColors[colorIndex];
+                                vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))].edges.Remove(vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))+1]);
+                                vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))+1].edges.Remove(vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))]);
+                                break;
                             }
                         }
                         else
                         {
-                            if (currColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))] != allColorsOpen[colorIndex] || currColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))] != allColorsOpen[colorIndex])
+                            if ((closedColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))] != allColors[colorIndex] || closedColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))+1] != allColors[colorIndex]) && (openColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))] != allColorsOpen[colorIndex] || openColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))+1] != allColorsOpen[colorIndex]))
                             {
-                                level.horizontalEdgeList[i] = allColorsOpen[colorIndex];
+                                level.verticalEdgeList[i] = allColorsOpen[colorIndex];
+                                break;
                             }
                         }
                     }
