@@ -204,9 +204,16 @@ namespace Colorinth.Generators
 
                         if (closed == 1)
                         {
-                            if (currColorList[i] == allColors[colorIndex] && currColorList[i+sizeX] == allColors[colorIndex])
+                            if (currColorList[i] != allColors[colorIndex] || currColorList[i+sizeX] != allColors[colorIndex])
                             {
                                 level.horizontalEdgeList[i] = allColors[colorIndex];
+                            }
+                        }
+                        else
+                        {
+                            if (currColorList[i] != allColorsOpen[colorIndex] || currColorList[i+sizeX] != allColorsOpen[colorIndex])
+                            {
+                                level.horizontalEdgeList[i] = allColorsOpen[colorIndex];
                             }
                         }
                     }
@@ -243,14 +250,21 @@ namespace Colorinth.Generators
                                 case 3: currColorList = GreenList; break;
                                 case 4: currColorList = PurpleList; break;
                                 case 5: currColorList = OrangeList; break;
-                            }
+                            } 
                         }
 
                         if (closed == 1)
                         {
-                            if (currColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))] == allColors[colorIndex] && currColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))] == allColors[colorIndex])
+                            if (currColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))] != allColors[colorIndex] || currColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))] != allColors[colorIndex])
                             {
                                 level.horizontalEdgeList[i] = allColors[colorIndex];
+                            }
+                        }
+                        else
+                        {
+                            if (currColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))] != allColorsOpen[colorIndex] || currColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))] != allColorsOpen[colorIndex])
+                            {
+                                level.horizontalEdgeList[i] = allColorsOpen[colorIndex];
                             }
                         }
                     }
