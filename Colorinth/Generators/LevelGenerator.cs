@@ -243,12 +243,12 @@ namespace Colorinth.Generators
                                 case 3: currColorList = GreenList; break;
                                 case 4: currColorList = PurpleList; break;
                                 case 5: currColorList = OrangeList; break;
-                            } 
+                            }
                         }
 
                         if (closed == 1)
                         {
-                            if (currColorList[i/((i/sizeX)*-1)] == allColors[colorIndex] && currColorList[i/((i/sizeX)*-1)+1] == allColors[colorIndex])
+                            if (currColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))] == allColors[colorIndex] && currColorList[(i/(sizeX-1))*sizeX + (i%(sizeX-1))] == allColors[colorIndex])
                             {
                                 level.horizontalEdgeList[i] = allColors[colorIndex];
                             }
