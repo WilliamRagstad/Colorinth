@@ -31,7 +31,7 @@ namespace Colorinth
         private Vector2 _center => new Vector2(_graphics.PreferredBackBufferWidth / 2f, _graphics.PreferredBackBufferHeight / 2f);
 
         private Size _gameWindowedSize = new Size(1200, 800);
-        private int _gameAreaScale = 50;
+        private int _gameAreaScale;
         private int _wallThickness = 5;
         private Rectangle _gameArea => new Rectangle((int)_center.X - _currentLevel.SizeX * _gameAreaScale, (int)_center.Y - _currentLevel.SizeY * _gameAreaScale, _currentLevel.SizeX * _gameAreaScale * 2, _currentLevel.SizeY * _gameAreaScale * 2);
 
@@ -87,8 +87,10 @@ namespace Colorinth
             base.Initialize();
 
             // Generate Level
-            _currentLevel = LevelGenerator.GenerateLevel(6, 7, 7, 0.44, false);
+            _currentLevel = LevelGenerator.GenerateLevel(6, 5, 5, 0.44, false);
             _player = new Player(0, 0);
+            _gameAreaScale = CalculateGameScale(_currentLevel, 50);
+
         }
 
         protected override void LoadContent()
@@ -124,6 +126,18 @@ namespace Colorinth
         }
 
         #endregion
+
+        /// <summary>
+        /// Graph of function: https://www.desmos.com/calculator/9xpkzghvpl
+        /// </summary>
+        /// <param name="level">level data</param>
+        /// <param name="baseScale">Original Scale factor</param>
+        /// <returns>scale</returns>
+        private int CalculateGameScale(Level level, int baseScale)
+        {
+            int x = Math.Max(level.SizeY, level.SizeX);
+            return (int) ((2.2f * Math.Exp( -x / 3.3f ) + .4f)  *  baseScale);
+        }
 
         #endregion
 
