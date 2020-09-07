@@ -35,11 +35,14 @@ namespace Colorinth
         private int _wallThickness => _gameAreaScale / 8; // = 5;
         private Rectangle _gameArea => new Rectangle((int)_center.X - _currentLevel.SizeX * _gameAreaScale, (int)_center.Y - _currentLevel.SizeY * _gameAreaScale, _currentLevel.SizeX * _gameAreaScale * 2, _currentLevel.SizeY * _gameAreaScale * 2);
 
+        private int _levelNr = 0;
         private Level _currentLevel;
         private Player _player;
 
         private Song _themeSong;
         private SoundEffect _startSoundEffect, _finishSoundEffect;
+
+        private SpriteFont _defaultFont;
 
         #endregion
 
@@ -81,9 +84,10 @@ namespace Colorinth
             _graphics.PreferredBackBufferHeight = _gameWindowedSize.Height;
             _graphics.IsFullScreen = _isFullscreen;
             _graphics.ApplyChanges();
-            
-            Player.Initialize(Content);
 
+            _defaultFont = Content.Load<SpriteFont>("default_font");
+
+            Player.Initialize(Content);
             LevelDrawer.Initialize(Content);
             PlayerDrawer.Initialize(Content);
             base.Initialize();
@@ -184,12 +188,13 @@ namespace Colorinth
             // Draw the background game area
             _spriteBatch.DrawRect(GraphicsDevice, _gameArea, _gameBackgroundColor);
             _spriteBatch.DrawGrid(GraphicsDevice, _gameArea, _currentLevel.SizeX, _currentLevel.SizeY, _gridColor, _wallThickness);
-            // Draw outlined rectangle
-            _spriteBatch.DrawGrid(GraphicsDevice, _gameArea, 1, 1, Color.White, _wallThickness * 2);
             // Draw the level
             _spriteBatch.DrawLevel(GraphicsDevice, _currentLevel, _gameArea, _gameAreaScale, _wallThickness * 2, Color.White);
             // Draw player
             _spriteBatch.DrawPlayer(GraphicsDevice, _currentLevel, _player, _gameArea, _gameAreaScale);
+
+            // Draw UI
+            _spriteBatch.DrawString(_defaultFont, "Level: " + _levelNr, new Vector2(20), Color.White);
 
             _spriteBatch.End();
 
