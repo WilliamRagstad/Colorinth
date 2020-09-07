@@ -32,7 +32,7 @@ namespace Colorinth
 
         private Size _gameWindowedSize = new Size(1200, 800);
         private int _gameAreaScale;
-        private int _wallThickness = 5;
+        private int _wallThickness => _gameAreaScale / 8; // = 5;
         private Rectangle _gameArea => new Rectangle((int)_center.X - _currentLevel.SizeX * _gameAreaScale, (int)_center.Y - _currentLevel.SizeY * _gameAreaScale, _currentLevel.SizeX * _gameAreaScale * 2, _currentLevel.SizeY * _gameAreaScale * 2);
 
         private Level _currentLevel;
@@ -70,6 +70,8 @@ namespace Colorinth
             }
 
             _fullscreenChanged = false;
+            
+            _gameAreaScale = CalculateGameScale(_currentLevel, 50, 3/5f);
         }
 
         protected override void Initialize()
@@ -89,7 +91,7 @@ namespace Colorinth
             // Generate Level
             _currentLevel = LevelGenerator.GenerateLevel(6, 7, 7, 0.30, false);
             _player = new Player(_currentLevel.StartX, _currentLevel.StartY);
-            _gameAreaScale = CalculateGameScale(_currentLevel, 50);
+            _gameAreaScale = CalculateGameScale(_currentLevel, 50, 3/5f);
 
         }
 
@@ -132,11 +134,18 @@ namespace Colorinth
         /// </summary>
         /// <param name="level">level data</param>
         /// <param name="baseScale">Original Scale factor</param>
+        /// <param name="fraction">The fraction of the screen to take up</param>
         /// <returns>scale</returns>
-        private int CalculateGameScale(Level level, int baseScale)
+        private int CalculateGameScale(Level level, int baseScale, float fraction)
         {
+            /*
             int x = Math.Max(level.SizeY, level.SizeX);
             return (int) ((2.2f * Math.Exp( -x / 3.3f ) + .4f)  *  baseScale);
+            */
+
+            int x = Math.Max(level.SizeY, level.SizeX);
+            int y = Math.Min(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+            return (int)( fraction * y / x / 2 );
         }
 
         #endregion
