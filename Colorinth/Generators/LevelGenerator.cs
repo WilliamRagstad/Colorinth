@@ -38,8 +38,8 @@ namespace Colorinth.Generators
                 finishTileIndex = sizeX*(sizeY/2+1)-1;
                 level.tileList[finishTileIndex] = 'F';
             }
-            level.startX = startTileIndex % sizeX;
-            level.startY = startTileIndex / sizeX;
+            level.StartX = (byte)(startTileIndex % sizeX);
+            level.StartY = (byte)(startTileIndex / sizeX);
 
             Graph G = new Graph(sizeX, sizeY);
             level.G = G;

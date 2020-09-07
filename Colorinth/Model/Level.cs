@@ -10,8 +10,8 @@ namespace Colorinth.Model
         public List<char> horizontalEdgeList = new List<char>();
         public List<char> verticalEdgeList = new List<char>();
         public Graph G;
-        public int startX;
-        public int startY;
+        public byte StartX;
+        public byte StartY;
 
         public Level(byte sizeX, byte sizeY)
         {
