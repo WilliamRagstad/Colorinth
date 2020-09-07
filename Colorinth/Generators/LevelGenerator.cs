@@ -162,9 +162,99 @@ namespace Colorinth.Generators
                 if (currColors[5] == 'o') blueList[currTileIndex] = 'o';
                 else BlueList[currTileIndex] = 'O';
 
-                if (curr.index == finishTileIndex)
+                if (curr.index == finishTileIndex) break;
+                
                 curr = curr.edges[rand.Next(curr.edges.Count)];
-                break;
+            }
+            
+            List<char> currColorList = null;
+            for (int i = 0; i < level.horizontalEdgeList.Count; i++)
+            {
+                if (level.horizontalEdgeList[i] == '.')
+                {
+                    for (int j = 0; j < 10*numOfColors; j++)
+                    {
+                        int colorIndex = rand.Next(numOfColors);
+                        int closed = rand.Next(2);
+
+                        if (closed == 0)
+                        {
+                            switch (colorIndex)
+                            {
+                                case 0: currColorList = redList; break;
+                                case 1: currColorList = blueList; break;
+                                case 2: currColorList = yellowList; break;
+                                case 3: currColorList = greenList; break;
+                                case 4: currColorList = purpleList; break;
+                                case 5: currColorList = orangeList; break;
+                            } 
+                        }
+                        else
+                        {
+                            switch (colorIndex)
+                            {
+                                case 0: currColorList = RedList; break;
+                                case 1: currColorList = BlueList; break;
+                                case 2: currColorList = YellowList; break;
+                                case 3: currColorList = GreenList; break;
+                                case 4: currColorList = PurpleList; break;
+                                case 5: currColorList = OrangeList; break;
+                            } 
+                        }
+
+                        if (closed == 1)
+                        {
+                            if (currColorList[i] == allColors[colorIndex] && currColorList[i+sizeX] == allColors[colorIndex])
+                            {
+                                level.horizontalEdgeList[i] = allColors[colorIndex];
+                            }
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < level.verticalEdgeList.Count; i++)
+            {
+                if (level.verticalEdgeList[i] == '.')
+                {
+                    for (int j = 0; j < 10*numOfColors; j++)
+                    {
+                        int colorIndex = rand.Next(numOfColors);
+                        int closed = rand.Next(2);
+
+                        if (closed == 0)
+                        {
+                            switch (colorIndex)
+                            {
+                                case 0: currColorList = redList; break;
+                                case 1: currColorList = blueList; break;
+                                case 2: currColorList = yellowList; break;
+                                case 3: currColorList = greenList; break;
+                                case 4: currColorList = purpleList; break;
+                                case 5: currColorList = orangeList; break;
+                            } 
+                        }
+                        else
+                        {
+                            switch (colorIndex)
+                            {
+                                case 0: currColorList = RedList; break;
+                                case 1: currColorList = BlueList; break;
+                                case 2: currColorList = YellowList; break;
+                                case 3: currColorList = GreenList; break;
+                                case 4: currColorList = PurpleList; break;
+                                case 5: currColorList = OrangeList; break;
+                            } 
+                        }
+
+                        if (closed == 1)
+                        {
+                            if (currColorList[i/((i/sizeX)*-1)] == allColors[colorIndex] && currColorList[i/((i/sizeX)*-1)+1] == allColors[colorIndex])
+                            {
+                                level.horizontalEdgeList[i] = allColors[colorIndex];
+                            }
+                        }
+                    }
+                }
             }
 
             return level;
