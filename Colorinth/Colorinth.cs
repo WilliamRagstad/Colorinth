@@ -187,7 +187,7 @@ namespace Colorinth
             // Draw outlined rectangle
             _spriteBatch.DrawGrid(GraphicsDevice, _gameArea, 1, 1, Color.White, _wallThickness * 2);
             // Draw the level
-            _spriteBatch.DrawLevel(GraphicsDevice, _currentLevel, _gameArea, _gameAreaScale, _wallThickness * 2);
+            _spriteBatch.DrawLevel(GraphicsDevice, _currentLevel, _gameArea, _gameAreaScale, _wallThickness * 2, Color.White);
             // Draw player
             _spriteBatch.DrawPlayer(GraphicsDevice, _currentLevel, _player, _gameArea, _gameAreaScale);
 

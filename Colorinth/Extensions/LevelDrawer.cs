@@ -41,7 +41,7 @@ namespace Colorinth.Extensions
             _buttonTexture= content.Load<Texture2D>("button_sprite");
         }
 
-        public static void DrawLevel(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Level level, Rectangle area, int areaScale, int wallThickness)
+        public static void DrawLevel(this SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Level level, Rectangle area, int areaScale, int wallThickness, Color wallColor)
         {
             #region Local Vars
             
@@ -70,23 +70,9 @@ namespace Colorinth.Extensions
                     int cx = area.X + tileOffsetX + x * areaScale * 2;
                     int cy = area.Y + tileOffsetY + y * areaScale * 2;
 
-                    switch (tile)
-                    {
-                        case 'S':
-                            DrawIcon(_startTexture, cx, cy);
-                            break;
-                        case 'F':
-                            DrawIcon(_finishTexture, cx, cy);
-                            break;
-                        case 'R':
-                        case 'B':
-                        case 'Y':
-                        case 'G':
-                        case 'P':
-                        case 'O':
-                            DrawButton(_colors[tile], cx, cy);
-                            break;
-                    }
+                    if (tile == 'F') DrawIcon(_finishTexture, cx, cy);
+                    // else if (tile == 'S') DrawIcon(_startTexture, cx, cy);
+                    else if (_colors.ContainsKey(tile)) DrawButton(_colors[tile], cx, cy);
                 }
             }
 
@@ -99,32 +85,33 @@ namespace Colorinth.Extensions
 
             #endregion
 
-            #region Horizontal Walls
+            #region Horizontal Walls & Doors
 
             for (int i = 0; i < level.horizontalEdgeList.Count; i++)
             {
-                if (level.horizontalEdgeList[i] == 'W')
-                {
-                    int x = area.X + (i % level.SizeX) * areaScale * 2;
-                    int y = area.Y + i / level.SizeY * areaScale * 2 + wallHorizontalLength;
+                char tile = level.horizontalEdgeList[i];
+                int x = area.X + (i % level.SizeX) * areaScale * 2;
+                int y = area.Y + i / level.SizeY * areaScale * 2 + wallHorizontalLength;
 
-                    spriteBatch.DrawLine(graphicsDevice, new Vector2(x, y), wallHorizontalLength + wallThickness, (float)(-90 * Math.PI / 180f), Color.AliceBlue, wallThickness, 0, new Vector2(wallThickness / 2f));
-                }
+                if (tile == 'W')
+                    spriteBatch.DrawLine(graphicsDevice, new Vector2(x, y), wallHorizontalLength + wallThickness, (float)(-90 * Math.PI / 180f), wallColor, wallThickness, 0, new Vector2(wallThickness / 2f));
+                else if (_colors.ContainsKey(tile))
+                    spriteBatch.DrawLine(graphicsDevice, new Vector2(x, y), wallHorizontalLength + wallThickness, (float)(-90 * Math.PI / 180f), _colors[tile], wallThickness, 0, new Vector2(wallThickness / 2f));
             }
 
             #endregion
 
-            #region Vertical Walls
+            #region Vertical Walls & Doors
 
             for (int i = 0; i < level.verticalEdgeList.Count; i++)
             {
-                if (level.verticalEdgeList[i] == 'W')
-                {
-                    int x = area.X + (i % (level.SizeX - 1)) * areaScale * 2 + wallHorizontalLength;
-                    int y = area.Y + (i / (level.SizeY - 1)) * areaScale * 2;
-
-                    spriteBatch.DrawLine(graphicsDevice, new Vector2(x, y), wallHorizontalLength + wallThickness, (float)(0 * Math.PI / 180f), Color.AliceBlue, wallThickness, 0, new Vector2(wallThickness / 2f));
-                }
+                char tile = level.verticalEdgeList[i];
+                int x = area.X + (i % (level.SizeX - 1)) * areaScale * 2 + wallHorizontalLength;
+                int y = area.Y + (i / (level.SizeY - 1)) * areaScale * 2;
+                if (tile == 'W')
+                    spriteBatch.DrawLine(graphicsDevice, new Vector2(x, y), wallHorizontalLength + wallThickness, (float)(0 * Math.PI / 180f), wallColor, wallThickness, 0, new Vector2(wallThickness / 2f));
+                else if (_colors.ContainsKey(tile))
+                    spriteBatch.DrawLine(graphicsDevice, new Vector2(x, y), wallHorizontalLength + wallThickness, (float)(0 * Math.PI / 180f),  _colors[tile], wallThickness, 0, new Vector2(wallThickness / 2f));
             }
             #endregion
         }
