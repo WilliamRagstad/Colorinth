@@ -21,14 +21,14 @@ namespace Colorinth.Updater
                 {
                     if (level.horizontalEdgeList[i] == closedDoorColor)
                     {
-                        vertices[i].edges.Remove(vertices[i+sizeX]);
-                        vertices[i+sizeX].edges.Remove(vertices[i]);
+                        vertices[i].edges.Add(vertices[i+sizeX]);
+                        vertices[i+sizeX].edges.Add(vertices[i]);
                         level.horizontalEdgeList[i] = openDoorColor;
                     }
                     else if (level.horizontalEdgeList[i] == openDoorColor)
                     {
-                        vertices[i].edges.Add(vertices[i+sizeX]);
-                        vertices[i+sizeX].edges.Add(vertices[i]);
+                        vertices[i].edges.Remove(vertices[i+sizeX]);
+                        vertices[i+sizeX].edges.Remove(vertices[i]);
                         level.horizontalEdgeList[i] = closedDoorColor;
                     }
                 }
@@ -36,14 +36,14 @@ namespace Colorinth.Updater
                 {
                     if (level.verticalEdgeList[i] == closedDoorColor)
                     {
-                        vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))].edges.Remove(vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))+1]);
-                        vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))+1].edges.Remove(vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))]);
+                        vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))].edges.Add(vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))+1]);
+                        vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))+1].edges.Add(vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))]);
                         level.verticalEdgeList[i] = openDoorColor;
                     }
                     else if (level.verticalEdgeList[i] == openDoorColor)
                     {
-                        vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))].edges.Add(vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))+1]);
-                        vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))+1].edges.Add(vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))]);
+                        vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))].edges.Remove(vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))+1]);
+                        vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))+1].edges.Remove(vertices[(i/(sizeX-1))*sizeX + (i%(sizeX-1))]);
                         level.verticalEdgeList[i] = closedDoorColor;
                     }
                 }
