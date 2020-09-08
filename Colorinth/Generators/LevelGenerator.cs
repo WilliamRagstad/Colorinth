@@ -79,7 +79,6 @@ namespace Colorinth.Generators
                 colors.Add(allColors[i]);
                 colorsOpen.Add(allColorsOpen[i]);
             }
-
             // Calculate exact number of buttons of each color
             int numColorsLeft = numOfColors;
             int numButtonsLeft = (int) (buttonRatio*(totalSize-2));
@@ -90,10 +89,23 @@ namespace Colorinth.Generators
                 numOfEachButton.Add((int)(Math.Ceiling((double)numButtonsLeft/numColorsLeft)));
                 numButtonsLeft -= numOfEachButton[i];
                 numColorsLeft--;
+                Console.WriteLine("{0}", numOfEachButton[i]);
             }
 
             // Assign buttons to tiles
-            int randomTileIndex;
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                if (i != startTileIndex && i != finishTileIndex)
+                {
+                    if (vertices[i].edges.Count == 1)
+                    {
+                        level.tileList[i] = colors[rand.Next(numOfColors)];
+                    }
+                }
+                
+            }
+
+            /* int randomTileIndex;
             for (int i = 0; i < numOfColors; i++)
             {
                 for (int j = 0; j < numOfEachButton[i]; j++)
@@ -107,7 +119,7 @@ namespace Colorinth.Generators
                         }
                     }
                 }
-            }
+            } */
 
             for (int i = 0; i < vertices.Count; i++)
             {
@@ -162,6 +174,7 @@ namespace Colorinth.Generators
                 else PurpleList[currVertex.index] = 'P';
                 if (currColors[5] == 'o') orangeList[currVertex.index] = 'o';
                 else OrangeList[currVertex.index] = 'O';
+            
                 if (level.tileList[currVertex.index] == 'R')
                 {
                     if (currColors[0] == 'r') currColors[0] = 'R';

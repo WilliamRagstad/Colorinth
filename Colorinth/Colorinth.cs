@@ -4,6 +4,7 @@ using Colorinth.Extensions;
 using Colorinth.Generators;
 using Colorinth.Managers;
 using Colorinth.Model;
+using Colorinth.Updater;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -93,7 +94,7 @@ namespace Colorinth
             base.Initialize();
 
             // Generate Level
-            _currentLevel = LevelGenerator.GenerateLevel(6, 9, 9, 0.30, false);
+            _currentLevel = LevelGenerator.GenerateLevel(6, 11, 11, 0.5, false);
             _player = new Player(_currentLevel.StartX, _currentLevel.StartY);
             _gameAreaScale = CalculateGameScale(_currentLevel, 50, 3/5f);
 
@@ -160,6 +161,7 @@ namespace Colorinth
         }
 
         private TimeSpan _previousMove;
+        private TimeSpan _previousPress;
         protected override void Update(GameTime gameTime)
         {
             KeyboardState kb = Keyboard.GetState();
@@ -175,7 +177,11 @@ namespace Colorinth
                 _previousMove = gameTime.TotalGameTime;
             }
 
-
+            if (kb.IsKeyDown(Keys.Space) && gameTime.TotalGameTime.Subtract(_previousPress).TotalMilliseconds > 200)
+            {
+                LevelUpdater.ButtonUpdateLevel(_player, _currentLevel);
+                _previousPress = gameTime.TotalGameTime;
+            }
             base.Update(gameTime);
         }
 

@@ -14,6 +14,7 @@ namespace Colorinth.Model
         /// Level X or Y position.
         /// </summary>
         public byte X, Y;
+        public int index;
 
         private static SoundEffect _walkSoundEffect;
 
